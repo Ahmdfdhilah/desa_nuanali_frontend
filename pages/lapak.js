@@ -75,7 +75,7 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     )
-    const getAllProducts = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product`);
+    const getAllProducts = await fetch(`https://web-profile-desa.vercel.app/api/product`);
     const products = await getAllProducts.json();
     return {
         props: { products }, // will be passed to the page component as props

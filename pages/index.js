@@ -28,7 +28,6 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 // install Swiper modules
-// SwiperCore.use([Autoplay]);
 SwiperCore.use([Autoplay, Pagination]);
 
 export default function Home({ posts, agendas, videos, photos }) {
@@ -383,13 +382,13 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     )
-    const getAllPosts = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post`);
+    const getAllPosts = await fetch(`https://web-profile-desa.vercel.app/api/post`);
     const posts = await getAllPosts.json();
-    const getAllAgenda = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/agenda`);
+    const getAllAgenda = await fetch(`https://web-profile-desa.vercel.app/api/agenda`);
     const agendas = await getAllAgenda.json();
-    const getAllVideo = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/video`);
+    const getAllVideo = await fetch(`https://web-profile-desa.vercel.app/api/video`);
     const videos = await getAllVideo.json();
-    const getAllPhotos = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/photo`);
+    const getAllPhotos = await fetch(`https://web-profile-desa.vercel.app/api/photo`);
     const photos = await getAllPhotos.json();
     return {
         // will be passed to the page component as props

@@ -248,14 +248,6 @@ export default function NavBarTop() {
                                     <a className="nav-link text-color-tertiary">Lapak</a>
                                 </ActiveLink>
                             </li>
-                            <li className="nav-item ms-lg-1">
-                                <ActiveLink activeClassName="active" href="/covid">
-                                    <a className="nav-link text-color-tertiary">Covid</a>
-                                </ActiveLink>
-                            </li>
-                            {/* <li className="nav-item ms-lg-1">
-                                <a className="nav-link" aria-current="page"><ThemeToggle /></a>
-                            </li> */}
                         </ul>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ import '../styles/darkmode.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import 'nprogress/nprogress.css'; //styles of nprogress
+import 'nprogress/nprogress.css'; 
 
 Router.events.on('routeChangeStart', () => NProgress.start()); 
 Router.events.on('routeChangeComplete', () => NProgress.done()); 
