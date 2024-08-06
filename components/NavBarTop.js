@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import imgLogo from "../public/logo.png"
+import imgLogo from "../public/logo-nuanali.png"
 import ActiveLink from './ActiveLink'
 import React, { useState, useEffect } from "react";
 import { FaPhoneAlt, FaRegEnvelope, FaFacebook, FaInstagram, FaTwitter, FaYoutube, FaBars } from "react-icons/fa";
@@ -10,12 +10,6 @@ const ThemeToggle = dynamic(() => import("../components/ThemeToggle"), {
 });
 
 export default function NavBarTop() {
-    let [namaDesa, setNamaDesa] = useState("Alang Alang");
-
-    useEffect(() => {
-        namaDesa = localStorage.getItem("namaDesa");
-        setNamaDesa(namaDesa);
-    });
 
     const [isFixedNavbar, setFixedNavbar] = useState("false");
 
@@ -118,8 +112,8 @@ export default function NavBarTop() {
                                 className="img-fluid"
                             />{" "}
                             <div>
-                                <h5 className="ms-1 my-0 fw-600 text-color-primary">Desa {namaDesa}</h5>
-                                <p className="ms-1 mb-0 text-15 text-color-tertiary">Kabupaten Bangkalan</p>
+                                <h5 className="ms-1 my-0 fw-600 text-color-primary">Desa Nuniali</h5>
+                                <p className="ms-1 mb-0 text-15 text-color-tertiary">Seram Bagian Barat</p>
                             </div>
                         </a>
                     </Link>
@@ -173,16 +167,6 @@ export default function NavBarTop() {
                                     <li className="me-2">
                                         <ActiveLink activeClassName="active" href="/agenda">
                                             <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Agenda</a>
-                                        </ActiveLink>
-                                    </li>
-                                    <li className="me-2">
-                                        <ActiveLink activeClassName="active" href="/produkhukum">
-                                            <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Produk Hukum</a>
-                                        </ActiveLink>
-                                    </li>
-                                    <li className="me-2">
-                                        <ActiveLink activeClassName="active" href="/informasipublik">
-                                            <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Informasi Publik</a>
                                         </ActiveLink>
                                     </li>
                                 </ul>

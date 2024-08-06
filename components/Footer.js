@@ -1,19 +1,10 @@
 import { useEffect } from "react";
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import imgLogo from "../public/logo.png";
+import imgLogo from "../public/logo-nuanali.png";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 
 export default function Footer() {
-    let [namaDesa, setNamaDesa] = useState("Alang Alang");
-    let [namaKecamatan, setNamaKecamatan] = useState("Tragah");
-
-    useEffect(() => {
-        namaDesa = localStorage.getItem("namaDesa");
-        setNamaDesa(namaDesa);
-        namaKecamatan = localStorage.getItem("namaKecamatan");
-        setNamaKecamatan(namaKecamatan);
-    });
     
     return (
         <>
@@ -42,8 +33,7 @@ export default function Footer() {
                         <div className="col-md-8 col-lg-4 my-2 my-md-0">
                             <h4>Tentang Web</h4>
                             <Image src={imgLogo} className="img-fluid mb-2" alt="image" height={100} width={100} />
-                            <p className="text-white-80 text-15">Website Resmi Desa {namaDesa}, Kec. {namaKecamatan}, Kabupaten Bangkalan, Jawa
-                                Timur. Media komunikasi dan transparansi Pemerintah Desa</p>
+                            <p className="text-white-80 text-15">Website Resmi Desa Negeri Nuniali, Kecamatan Taniwel, Seram Bagian Barat, Maluku. Media komunikasi dan transparansi Pemerintah Desa</p>
                         </div>
                         <div className="col-md-6 col-lg-3 my-2 my-md-0">
                             <h5 className="mb-3">Kontak Desa</h5>
@@ -51,7 +41,7 @@ export default function Footer() {
                                 <li className="my-2">
                                     <div className="d-flex">
                                         <i className="me-2"><FaMapMarkerAlt/></i>
-                                        Jl. Raya {namaDesa} Kec. {namaKecamatan}, Bangkalan, 69116
+                                        Negeri Nuniali, Kecamatan Taniwel, Seram Bagian Barat, Maluku
                                     </div>
                                 </li>
                                 <li className="my-2">
@@ -85,16 +75,16 @@ export default function Footer() {
                             <h5 className="mb-3">Aplikasi Desa</h5>
                             <ul className="list-unstyled text-white-80 text-decoration-none text-15">
                                 <li className="my-2">
-                                    <a href="https://web-anjungan-desa.vercel.app" className="text-decoration-none text-white-80" rel="noreferrer" target="_blank">Sistem Desa</a>
+                                    <a href="#" className="text-decoration-none text-white-80" rel="noreferrer" target="_blank">Sistem Desa</a>
                                 </li>
                                 <li className="my-2">
-                                    <a href="https://web-anjungan-desa.vercel.app" className="text-decoration-none text-white-80" rel="noreferrer" target="_blank">Pengaduan Online</a>
+                                    <a href="#" className="text-decoration-none text-white-80" rel="noreferrer" target="_blank">Pengaduan Online</a>
                                 </li>
                                 <li className="my-2">
-                                    <a href="https://web-anjungan-desa.vercel.app" className="text-decoration-none text-white-80" rel="noreferrer" target="_blank">Pengajuan Surat</a>
+                                    <a href="#" className="text-decoration-none text-white-80" rel="noreferrer" target="_blank">Pengajuan Surat</a>
                                 </li>
                                 <li className="my-2">
-                                    <a href="https://web-anjungan-desa.vercel.app" className="text-decoration-none text-white-80" rel="noreferrer" target="_blank">Info Kesehatan</a>
+                                    <a href="#" className="text-decoration-none text-white-80" rel="noreferrer" target="_blank">Info Kesehatan</a>
                                 </li>
                             </ul>
                         </div>
@@ -102,7 +92,7 @@ export default function Footer() {
                     <div className="row pt-3 pb-md-0 mt-4 border-top-dark">
                         <div className="col-md-8  text-center text-md-start text-15">
                             <p className="text-white-80">Copyright © 
-                                <a href="#" className="text-decoration-none text-white-80"> Desa {namaDesa}</a>. 
+                                <a href="#" className="text-decoration-none text-white-80"> Desa Nuniali</a>. 
                                 All rights reserved
                             </p>
                         </div>

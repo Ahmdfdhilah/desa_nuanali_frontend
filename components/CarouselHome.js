@@ -1,9 +1,6 @@
 import { useEffect } from "react";
-import React, { useState, useCallback } from "react";
+import React, { useState} from "react";
 import Image from "next/image";
-import imgHero from "../public/hero.webp";
-import imgHeroA from "../public/hero1.jpg";
-import imgHeroB from "../public/hero2.jpg";
 
 export default function CarouselHome() {
     let [namaDesa, setNamaDesa] = useState("Alang Alang");
@@ -76,7 +73,7 @@ export default function CarouselHome() {
                     <div className="carousel-item active">
                         <Image
                             alt="Carousel"
-                            src={imgHero}
+                            src="/hero.webp"
                             width="1920"
                             height="960"
                             className="d-block w-100 carousel-zoom"
@@ -90,7 +87,7 @@ export default function CarouselHome() {
                     <div className="carousel-item">
                         <Image
                             alt="Carousel"
-                            src={imgHeroA}
+                            src="/hero1.jpg"
                             width="1920"
                             height="960"
                             className="d-block w-100 carousel-zoom"
@@ -98,13 +95,13 @@ export default function CarouselHome() {
                         <div className="carousel-overlay"></div>
                         <div className="carousel-caption">
                             <h1>Desa Rukun & Gotong Royong</h1>
-                            <p className="carousel-text">Website Desa Kreatif dan Inovatif</p>
+                            <p className="carousel-text">Website Desa Kreatif dan Inovatifff</p>
                         </div>
                     </div>
                     <div className="carousel-item">
                         <Image
                             alt="Carousel"
-                            src={imgHeroB}
+                            src="/hero2.jpg"
                             width="1920"
                             height="960"
                             className="d-block w-100 carousel-zoom"

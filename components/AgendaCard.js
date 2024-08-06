@@ -40,7 +40,7 @@ export default function AgendaCard({ id, slug, image, title, location, date, tim
                     </div>
                     <div className="col-sm-8">
                         <div className="card-body">
-                            <Link href={`/agenda/${slug}`}>
+                            <Link href={`/agenda/${id}`}>
                                 <a className="stretched-link"><h5 className="card-title mb-3">{title}</h5></a>
                             </Link>
                             <div className="d-flex mb-3">

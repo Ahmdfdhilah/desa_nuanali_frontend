@@ -7,7 +7,8 @@ import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, T
 import { Bar } from 'react-chartjs-2';
 import BackToTop from "../components/BackToTop";
 
-ChartJS.register( ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement );
+ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
+
 const optionsBarChart = {
     plugins: {
         legend: {
@@ -33,16 +34,17 @@ const optionsBarChart = {
 const title = "Demografis Wilayah";
 
 export default function Wilayah({ area }) {
-
-    let [namaDesa, setNamaDesa] = useState("Alang Alang");
+    const [namaDesa, setNamaDesa] = useState("Alang Alang");
 
     useEffect(() => {
-        namaDesa = localStorage.getItem("namaDesa");
-        setNamaDesa(namaDesa);
-    });
+        const storedNamaDesa = localStorage.getItem("namaDesa");
+        if (storedNamaDesa) {
+            setNamaDesa(storedNamaDesa);
+        }
+    }, []);
 
-    const dataArea = populateData(area);
-    const [totalRT, totalKK, totalMale, totalFemale, totalCount] = getTotalData(area);
+    const dataArea = populateData(area.data);
+    const [totalRT, totalKK, totalMale, totalFemale, totalCount] = getTotalData(area.data);
     
     return (
         <>
@@ -106,9 +108,9 @@ export default function Wilayah({ area }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {area.map(item => 
+                                        {area.data.map((item, index) => 
                                             <tr key={item.id}>
-                                                <td>{item.id}</td>
+                                                <td>{index+1}</td>
                                                 <td>{item.name}</td>
                                                 <td>{item.rt}</td>
                                                 <td>{item.kk}</td>
@@ -130,7 +132,6 @@ export default function Wilayah({ area }) {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </main>
 
@@ -141,19 +142,16 @@ export default function Wilayah({ area }) {
 };
 
 // This gets called on every request to this page
-export async function getServerSideProps({ res }) {
-    res.setHeader(
-        'Cache-Control',
-        'public, s-maxage=10, stale-while-revalidate=59'
-    )
-    const getDataArea = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/wilayah`);
-    const area = await getDataArea.json();
+export async function getServerSideProps() {
+    const response = await fetch(`http://localhost:3000/wilayahs?sort=name&&order=ASC`);
+    const data = await response.json();
+    console.log(data);
+    
     return {
-        props: { area }, // will be passed to the page component as props
+        props: { area: data }, 
     };
-};
+}
 
-// Populate Data for ChartJS 
 function populateData(param) {
     const labels = [], male = [], female = [], total = [];
     param.map(item =>
@@ -190,7 +188,7 @@ function populateData(param) {
         options: {
             legend: {
                 labels: {
-                    fontColor: 'white' //set your desired color
+                    fontColor: 'white' 
                 }
             }
         }
@@ -198,7 +196,6 @@ function populateData(param) {
     return (data);
 }
 
-// Count each row value for total row
 function getTotalData(param) {
     const rt = [], kk = [], male = [], female = [], total = [];
     let totalRT = 0, totalKK = 0, totalMale = 0, totalFemale = 0, totalCount = 0;

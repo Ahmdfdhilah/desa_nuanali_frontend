@@ -46,7 +46,7 @@ export default function PostCard({ id, image, title, slug, author, date, excerpt
                 />
                 <div className="card-body">
                     
-                    <Link href={`/berita/${slug}`}>
+                    <Link href={`/berita/${id}`}>
                         <a className="stretched-link"><h5 className="card-title">{title}</h5></a>
                     </Link>
                     <div className="d-flex blog-meta text-color-muted py-2">

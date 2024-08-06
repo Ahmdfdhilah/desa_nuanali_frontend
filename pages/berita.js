@@ -8,7 +8,7 @@ import BackToTop from "../components/BackToTop";
 
 const title = "Berita";
 
-export default function Berita({posts}) {
+export default function Berita({ posts }) {
     let [namaDesa, setNamaDesa] = useState("Alang Alang");
 
     useEffect(() => {
@@ -46,13 +46,13 @@ export default function Berita({posts}) {
                     <div className="row g-4">
                         {posts.map(post =>
                             <div className="col-sm-6 col-md-6 col-lg-4" key={post.id}>
-                                <PostCard 
-                                    id={post.id} 
-                                    image={post.image} 
-                                    title={post.title} 
-                                    slug={post.slug} 
-                                    author={post.author} 
-                                    date={post.date} 
+                                <PostCard
+                                    id={post.id}
+                                    image={`http://localhost:3000${post.image}`}
+                                    title={post.title}
+                                    slug={post.slug}
+                                    author={post.author}
+                                    date={post.date}
                                     excerpt={post.excerpt} />
                             </div>
                         )}
@@ -73,9 +73,14 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     )
-    const getAllPosts = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post`);
-    const posts = await getAllPosts.json();
+
+    const response = await fetch(`http://localhost:3000/beritas`);
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    const datas = await response.json();
+
     return {
-        props: { posts }, // will be passed to the page component as props
+        props: { posts: datas.data },
     };
 };

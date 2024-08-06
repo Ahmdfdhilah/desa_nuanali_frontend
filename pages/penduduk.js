@@ -390,7 +390,7 @@ export async function getServerSideProps({ res }) {
     const getDataUsia = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/usia`);
     const usia = await getDataUsia.json();
     return {
-        props: { gender, education, religion, pekerjaan, status, usia }, // will be passed to the page component as props
+        props: { gender, education, religion, pekerjaan, status, usia }, 
     };
 };
 

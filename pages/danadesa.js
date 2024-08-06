@@ -4,10 +4,11 @@ import NavBarTop from "../components/NavBarTop";
 import Footer from "../components/Footer";
 import Breadcrumb from "../components/Breadcrumb";
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, Tooltip, Legend } from 'chart.js';
-import { Bar, Doughnut, Pie } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import BackToTop from "../components/BackToTop";
+import { formatRupiah } from "../utils/formatRp";
 
-ChartJS.register( ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement );
+ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
 const title = "Dana Desa";
 const colors = ["#36b9cc", "#e74a3b", "#fd7e14", "#f6c23e"];
@@ -15,9 +16,7 @@ const options = {
     plugins: {
         legend: {
             labels: {
-                font: {
-                    // size: 13
-                },
+                font: {},
                 color: "#888"
             }
         }
@@ -25,19 +24,18 @@ const options = {
 };
 
 export default function DanaDesa({ danadesa }) {
-
-    let [namaDesa, setNamaDesa] = useState("Alang Alang");
+    const [namaDesa, setNamaDesa] = useState("Alang Alang");
 
     useEffect(() => {
-        namaDesa = localStorage.getItem("namaDesa");
-        setNamaDesa(namaDesa);
-    })
-    
-    const [totalPendapatanAnggaran, totalPendapatanRealisasi, totalPendapatanSelisih, totalPendapatanPresentase] = getTotalData(danadesa.pendapatan);
-    const [totalBelanjaAnggaran, totalBelanjaRealisasi, totalBelanjaSelisih, totalBelanjaPresentase] = getTotalData(danadesa.belanja);
-    const [totalPembiayaanAnggaran, totalPembiayaanRealisasi, totalPembiayaanSelisih, totalPembiayaanPresentase] = getTotalData(danadesa.pembiayaan);
-    // console.log(danadesa);
-    // console.log(totalPendapatanSelisih);
+        const storedNamaDesa = localStorage.getItem("namaDesa");
+        if (storedNamaDesa) {
+            setNamaDesa(storedNamaDesa);
+        }
+    }, []);
+
+    const [totalPendapatanAnggaran, totalPendapatanRealisasi, totalPendapatanSelisih, totalPendapatanPresentase] = getTotalData(danadesa.filter(item => item.tipe === 'Pendapatan'));
+    const [totalBelanjaAnggaran, totalBelanjaRealisasi, totalBelanjaSelisih, totalBelanjaPresentase] = getTotalData(danadesa.filter(item => item.tipe === 'Belanja'));
+    const [totalPembiayaanAnggaran, totalPembiayaanRealisasi, totalPembiayaanSelisih, totalPembiayaanPresentase] = getTotalData(danadesa.filter(item => item.tipe === 'Pembiayaan'));
 
     const dataDanaDesa = {
         labels: ["Pendapatan", "Belanja", "Pembiayaan"],
@@ -46,7 +44,7 @@ export default function DanaDesa({ danadesa }) {
             backgroundColor: colors
         }]
     };
-    
+
     return (
         <>
             <style jsx>
@@ -93,11 +91,6 @@ export default function DanaDesa({ danadesa }) {
                                     width={400}
                                     height={250}
                                 />
-                                {/* <Bar
-                                    data={dataDanaDesa}
-                                    width={400}
-                                    height={250}
-                                /> */}
                             </div>
                             <h5 className="mt-5 text-color-primary">Tabel Data</h5>
                             <div className="table-responsive mt-3">
@@ -119,21 +112,21 @@ export default function DanaDesa({ danadesa }) {
                                             <td></td>
                                             <td></td>
                                         </tr>
-                                        {danadesa.pendapatan.map(item =>
+                                        {danadesa.filter(item => item.tipe === 'Pendapatan').map(item =>
                                             <tr key={item.id}>
                                                 <td>{item.nama}</td>
-                                                <td>{item.anggaran}</td>
-                                                <td>{item.realisasi}</td>
-                                                <td>{item.selisih}</td>
-                                                <td>{item.presentase}</td>
+                                                <td>{formatRupiah(item.anggaran)}</td>
+                                                <td>{formatRupiah(item.realisasi)}</td>
+                                                <td>{formatRupiah(item.anggaran - item.realisasi)}</td>
+                                                <td>{((item.realisasi / item.anggaran) * 100).toFixed(2)}%</td>
                                             </tr>
                                         )}
                                         <tr>
                                             <td className="fw-bold">Jumlah</td>
-                                            <td className="fw-bold">{totalPendapatanAnggaran}</td>
-                                            <td className="fw-bold">{totalPendapatanRealisasi}</td>
-                                            <td className="fw-bold">{totalPendapatanSelisih}</td>
-                                            <td className="fw-bold">{totalPendapatanPresentase}</td>
+                                            <td className="fw-bold">{formatRupiah(totalPendapatanAnggaran)}</td>
+                                            <td className="fw-bold">{formatRupiah(totalPendapatanRealisasi)}</td>
+                                            <td className="fw-bold">{formatRupiah(totalPendapatanSelisih)}</td>
+                                            <td className="fw-bold">{totalPendapatanPresentase.toFixed(2)}%</td>
                                         </tr>
                                         <tr>
                                             <td colSpan="5"></td>
@@ -146,21 +139,21 @@ export default function DanaDesa({ danadesa }) {
                                             <td></td>
                                             <td></td>
                                         </tr>
-                                        {danadesa.belanja.map(item =>
+                                        {danadesa.filter(item => item.tipe === 'Belanja').map(item =>
                                             <tr key={item.id}>
                                                 <td>{item.nama}</td>
-                                                <td>{item.anggaran}</td>
-                                                <td>{item.realisasi}</td>
-                                                <td>{item.selisih}</td>
-                                                <td>{item.presentase}</td>
+                                                <td>{formatRupiah(item.anggaran)}</td>
+                                                <td>{formatRupiah(item.realisasi)}</td>
+                                                <td>{formatRupiah(item.anggaran - item.realisasi)}</td>
+                                                <td>{((item.realisasi / item.anggaran) * 100).toFixed(2)}%</td>
                                             </tr>
                                         )}
                                         <tr>
                                             <td className="fw-bold">Jumlah</td>
-                                            <td className="fw-bold">{totalBelanjaAnggaran}</td>
-                                            <td className="fw-bold">{totalBelanjaRealisasi}</td>
-                                            <td className="fw-bold">{totalBelanjaSelisih}</td>
-                                            <td className="fw-bold">{totalBelanjaPresentase}</td>
+                                            <td className="fw-bold">{formatRupiah(totalBelanjaAnggaran)}</td>
+                                            <td className="fw-bold">{formatRupiah(totalBelanjaRealisasi)}</td>
+                                            <td className="fw-bold">{formatRupiah(totalBelanjaSelisih)}</td>
+                                            <td className="fw-bold">{totalBelanjaPresentase.toFixed(2)}%</td>
                                         </tr>
                                         <tr>
                                             <td colSpan="5"></td>
@@ -173,21 +166,21 @@ export default function DanaDesa({ danadesa }) {
                                             <td></td>
                                             <td></td>
                                         </tr>
-                                        {danadesa.pembiayaan.map(item =>
+                                        {danadesa.filter(item => item.tipe === 'Pembiayaan').map(item =>
                                             <tr key={item.id}>
                                                 <td>{item.nama}</td>
-                                                <td>{item.anggaran}</td>
-                                                <td>{item.realisasi}</td>
-                                                <td>{item.selisih}</td>
-                                                <td>{item.presentase}</td>
+                                                <td>{formatRupiah(item.anggaran)}</td>
+                                                <td>{formatRupiah(item.realisasi)}</td>
+                                                <td>{formatRupiah(item.anggaran - item.realisasi)}</td>
+                                                <td>{((item.realisasi / item.anggaran) * 100).toFixed(2)}%</td>
                                             </tr>
                                         )}
                                         <tr>
                                             <td className="fw-bold">Jumlah</td>
-                                            <td className="fw-bold">{totalPembiayaanAnggaran}</td>
-                                            <td className="fw-bold">{totalPembiayaanRealisasi}</td>
-                                            <td className="fw-bold">{totalPembiayaanSelisih}</td>
-                                            <td className="fw-bold">{totalPembiayaanPresentase}</td>
+                                            <td className="fw-bold">{formatRupiah(totalPembiayaanAnggaran)}</td>
+                                            <td className="fw-bold">{formatRupiah(totalPembiayaanRealisasi)}</td>
+                                            <td className="fw-bold">{formatRupiah(totalPembiayaanSelisih)}</td>
+                                            <td className="fw-bold">{totalPembiayaanPresentase.toFixed(2)}%</td>
                                         </tr>
                                         <tr>
                                             <td colSpan="5"></td>
@@ -202,11 +195,11 @@ export default function DanaDesa({ danadesa }) {
             </main>
 
             <Footer />
-            
+
             <BackToTop />
         </>
     );
-};
+}
 
 // This gets called on every request to this page
 export async function getServerSideProps({ res }) {
@@ -214,59 +207,30 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     )
-    const getDataDanaDesa = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/danadesa`);
-    const danadesa = await getDataDanaDesa.json();
-    return {
-        props: { danadesa }, // will be passed to the page component as props
-    };
-};
+    const getDataDanaDesa = await fetch('http://localhost:3000/dana-desas');
+    const json = await getDataDanaDesa.json();
+    const danadesa = json.data;
 
-// Populate Data for ChartJS 
-function populateData(param) {
-    console.log(param)
-    const labels = [];
-    const totals = [];
-    // param.map(item =>
-    //     labels.push(item.name)
-    // );
-    // param.map(item =>
-    //     totals.push(item.total)
-    // );
-    const data = {
-        labels: labels,
-        datasets: [{
-            data: totals,
-            backgroundColor: colors
-        }]
+    return {
+        props: { danadesa },
     };
-    return (data);
 }
 
 // Count each row value for total row
 function getTotalData(param) {
     const anggaran = [], realisasi = [], selisih = [], presentase = [];
     let totalAnggaran = 0, totalRealisasi = 0, totalSelisih = 0, totalPresentase = 0;
-    param.map(item =>
-        anggaran.push(item.anggaran)
-    );
-    param.map(item =>
-        realisasi.push(item.realisasi)
-    );
-    param.map(item =>
-        selisih.push(item.selisih)
-    );
-    param.map(item =>
-        presentase.push(item.presentase)
-    );
+    param.forEach(item => {
+        anggaran.push(parseFloat(item.anggaran));
+        realisasi.push(parseFloat(item.realisasi));
+        selisih.push(parseFloat(item.anggaran) - parseFloat(item.realisasi));
+        presentase.push(((parseFloat(item.realisasi) / parseFloat(item.anggaran)) * 100));
+    });
 
-    for (let index = 0; index < anggaran.length; index++) {
-        totalAnggaran += parseInt(anggaran[index]);
-        totalRealisasi += parseInt(realisasi[index]);
-        totalSelisih += parseInt(selisih[index]);
-        totalPresentase += parseInt(presentase[index]);
-    }
-
-    totalPresentase = totalPresentase / anggaran.length;
+    totalAnggaran = anggaran.reduce((acc, cur) => acc + cur, 0);
+    totalRealisasi = realisasi.reduce((acc, cur) => acc + cur, 0);
+    totalSelisih = selisih.reduce((acc, cur) => acc + cur, 0);
+    totalPresentase = presentase.reduce((acc, cur) => acc + cur, 0) / presentase.length;
 
     return [totalAnggaran, totalRealisasi, totalSelisih, totalPresentase];
 }

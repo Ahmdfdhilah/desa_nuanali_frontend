@@ -12,7 +12,7 @@ import { FaUser, FaRegCalendarAlt, FaShareAlt } from "react-icons/fa";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { FacebookIcon, TwitterIcon, WhatsappIcon, TelegramIcon, FacebookShareButton, TelegramShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
 
-export default function Agendaetail({ agenda, randomPosts, randomAgendas}) {
+export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
     const router = useRouter()
     let [namaDesa, setNamaDesa] = useState("Alang Alang");
 
@@ -20,7 +20,6 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas}) {
         namaDesa = localStorage.getItem("namaDesa");
         setNamaDesa(namaDesa);
     });
-    // console.log(post.author)
     // Get 3 post
     const someRandomPosts = randomPosts.slice(0, 3);
     // Get 3 agenda
@@ -104,7 +103,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas}) {
                 <meta property="og:description" content={`Website Resmi Desa ${namaDesa}. Media komunikasi dan transparansi Pemerintah Desa`} />
                 <meta property="og:image" content={`${process.env.NEXT_PUBLIC_API_URL}/metalogo.jpg`}></meta>
             </Head>
-            
+
             <NavBarTop />
 
             <main>
@@ -115,7 +114,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas}) {
                             <div className="card bg-card-primary shadow-blog border-0">
                                 <Image
                                     alt="Image"
-                                    src={agenda.image}
+                                    src={`http://localhost:3000${agenda.image}`}
                                     width="450"
                                     height="400"
                                     quality={90}
@@ -129,7 +128,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas}) {
                                             <small className="text-muted ms-2">{agenda.date}</small>
                                         </div>
                                     </div>
-                                    <p className="card-text mt-2 text-color-secondary">{agenda.body}</p>
+                                    <p className="card-text mt-2 text-color-secondary" dangerouslySetInnerHTML={{ __html: agenda.body }}></p>
                                     <div className="d-flex justify-content-end mt-4 mb-2">
                                         <OverlayTrigger trigger="click" placement="left" overlay={popover}>
                                             <button className="btn btn-outline-primary btn-sm"><FaShareAlt className="me-2" />Bagikan</button>
@@ -148,7 +147,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas}) {
                                     <div key={item.id}>
                                         <PostList
                                             id={item.id}
-                                            image={item.image}
+                                            image={`http://localhost:3000${item.image}`}
                                             title={item.title}
                                             slug={item.slug}
                                             date={item.date}
@@ -158,36 +157,12 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas}) {
                             </div>
 
                             <div className="card bg-card-primary shadow-blog border-0 px-3 py-2 mt-4">
-                                <h5 className="mb-3 text-color-primary">Categories</h5>
-                                <ul className="list-group border-0">
-                                    <li className="list-group-item bg-card-primary border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                        <Link href="/berita/kategori/berita">
-                                            <a className="text-decoration-none">Berita</a>
-                                        </Link>
-                                        <span className="badge bg-primary rounded-pill">7</span>
-                                    </li>
-                                    <li className="list-group-item bg-card-primary border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                        <Link href="/berita/kategori/kesehatan">
-                                            <a className="text-decoration-none">Kesehatan</a>
-                                        </Link>
-                                        <span className="badge bg-primary rounded-pill">5</span>
-                                    </li>
-                                    <li className="list-group-item bg-card-primary border-0 px-0 py-1 d-flex justify-content-between align-items-center">
-                                        <Link href="/berita/kategori/acak">
-                                            <a className="text-decoration-none">Acak</a>
-                                        </Link>
-                                        <span className="badge bg-primary rounded-pill">3</span>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div className="card bg-card-primary shadow-blog border-0 px-3 py-2 mt-4">
                                 <h5 className="mb-3 text-color-primary">Latest Agenda</h5>
                                 {someRandomAgendas.map(item =>
                                     <div key={item.id}>
                                         <AgendaList
                                             id={item.id}
-                                            image={item.image}
+                                            image={`http://localhost:3000${item.image}`}
                                             title={item.title}
                                             slug={item.slug}
                                             date={item.date}
@@ -200,7 +175,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas}) {
                     </div>
                 </div>
             </main>
-            
+
             <Footer />
 
             <BackToTop />
@@ -208,30 +183,30 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas}) {
     );
 };
 
-// This gets called on every request to this page
 export async function getServerSideProps({ params, res }) {
     res.setHeader(
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
-    )
-    // console.log(params.slug)
-    // Call external API from here directly using slug params in route url
-    const getSingleAgenda = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/agenda/${params.slug}`);
-    const agenda = await getSingleAgenda.json();
-    // For random post
-    const getRandomPost = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post`);
-    const randomPosts = await getRandomPost.json();
-    // For random agenda
-    const getRandomAgenda = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/agenda`);
-    const randomAgendas = await getRandomAgenda.json();
-    // console.log(getSinglePost.status)
-    // handle detail not found to 404 page
-    if (getSingleAgenda.status == 404) {
-        return {
-            notFound: true,
-        };
-    } 
+    );
+
+    const [responseRandomAgenda, responseRandomPost, responseSingleAgenda] = await Promise.all([
+        fetch(`http://localhost:3000/agendas`),
+        fetch(`http://localhost:3000/beritas`),
+        fetch(`http://localhost:3000/agendas/${params.id}`)
+    ]);
+
+
+    const [datasRandomAgenda, datasRandomPost, dataSingleAgenda] = await Promise.all([
+        responseRandomAgenda.json(),
+        responseRandomPost.json(),
+        responseSingleAgenda.json()
+    ]);
+
     return {
-        props: { agenda, randomPosts, randomAgendas },
+        props: {
+            agenda: dataSingleAgenda,
+            randomPosts: datasRandomPost.data,
+            randomAgendas: datasRandomAgenda.data
+        }
     };
-};
+}

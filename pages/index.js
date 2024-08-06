@@ -11,7 +11,7 @@ import VideoCard from '../components/VideoCard';
 import BackToTop from "../components/BackToTop";
 import StatisticLink from "../components/StatisticLink";
 import SistemDesa from "../components/SistemDesa";
-import imageLogo from "../public/logo.png";
+import imageLogo from "../public/logo-nuanali.png";
 import Gallery from 'react-photo-gallery';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 import { FaArrowRight, FaArrowDown } from "react-icons/fa";
@@ -31,8 +31,8 @@ import 'aos/dist/aos.css';
 SwiperCore.use([Autoplay, Pagination]);
 
 export default function Home({ posts, agendas, videos, photos }) {
-    let [namaDesa, setNamaDesa] = useState("Alang Alang");
-    let [namaKecamatan, setNamaKecamatan] = useState("Tragah");
+    let [namaDesa, setNamaDesa] = useState("Nuniali");
+    let [namaKecamatan, setNamaKecamatan] = useState("Seram Bagian Barat");
 
     useEffect(() => {
         AOS.init({
@@ -130,7 +130,7 @@ export default function Home({ posts, agendas, videos, photos }) {
                                 <div className="text-center text-md-start mt-3 mt-md-0">
                                     <h3 className="pb-2 text-color-primary">Website Desa {namaDesa}</h3>
                                     <p className="text-color-secondary" id="scroll-to-statistic">
-                                        Website Resmi Desa {namaDesa}, Kec. {namaKecamatan}, Kabupaten Bangkalan, Jawa Timur. Media komunikasi dan transparansi Pemerintah Desa untuk seluruh masyarakat di Indonesia
+                                    Website Resmi Desa Negeri Nuniali, Kecamatan Taniwel, Seram Bagian Barat, Maluku. Media komunikasi dan transparansi Pemerintah Desa
                                     </p>
                                     <Link href="/sejarah">
                                         <a className="btn btn-primary shadow rounded px-3 scroll-to">Profil Desa 

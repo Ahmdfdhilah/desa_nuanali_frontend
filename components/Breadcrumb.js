@@ -1,6 +1,4 @@
 import Link from "next/link"
-import Image from "next/image"
-import imgLogo from "../public/logo.png"
 
 export default function Breadcrumb({pageName, currentPage}) {
 

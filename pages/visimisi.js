@@ -3,7 +3,7 @@ import Head from "next/head";
 import NavBarTop from "../components/NavBarTop";
 import Footer from "../components/Footer";
 import BreadcrumbArea from "../components/BreadcrumbArea";
-import imgDesa from "../public/hero.webp";
+// import imgDesa from "/hero.webp";
 import Image from "next/image";
 import BackToTop from "../components/BackToTop";
 
@@ -44,8 +44,10 @@ export default function Sejarah({ posts }) {
                         <div className="card bg-card-primary border-0 shadow-sm px-3 py-3 mb-4">
                             <h3 className="text-color-primary">Visi Dan Misi</h3>
                             <Image
-                                src={imgDesa}
+                                src="/hero.webp"
                                 alt="Desa"
+                                height={300}
+                                width={300}
                                 className="img-fluid rounded my-3" />
                             <h5 className="mt-4 text-color-primary">Visi</h5>
                             <p className ="text-color-secondary">“ Terwujudnya Desa {namaDesa} sebagai Desa yang Mandiri melalui Pengembangan Ekonomi Berbasis Potensi Sumber Daya Alam untuk mencapai masyarakat makmur dan agamis ”</p>

@@ -8,7 +8,7 @@ import BackToTop from "../components/BackToTop";
 
 const title = "Agenda";
 
-export default function Agenda({agendas}) {
+export default function Agenda({ agendas }) {
     let [namaDesa, setNamaDesa] = useState("Alang Alang");
 
     useEffect(() => {
@@ -44,16 +44,18 @@ export default function Agenda({agendas}) {
 
                 <div className="container my-5">
                     <div className="row g-4">
+                        {console.log(agendas)
+                        }
                         {agendas.map(agenda =>
                             <div className="col-lg-6" key={agenda.id}>
-                                <AgendaCard 
-                                    id={agenda.id} 
+                                <AgendaCard
+                                    id={agenda.id}
                                     slug={agenda.slug}
-                                    image={agenda.image} 
-                                    title={agenda.title} 
+                                    image={`http://localhost:3000${agenda.image}`}
+                                    title={agenda.title}
                                     location={agenda.location}
-                                    date={agenda.date} 
-                                    time={agenda.time}  />
+                                    date={agenda.date}
+                                    time={agenda.time} />
                             </div>
                         )}
                     </div>
@@ -72,9 +74,15 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     )
-    const getAllAgenda = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/agenda`);
-    const agendas = await getAllAgenda.json();
+    const response = await fetch(`http://localhost:3000/agendas`);
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    const datas = await response.json();
+    console.log(datas);
+    
+    const data = datas.data;
     return {
-        props: { agendas }, // will be passed to the page component as props
+        props: { agendas : data },
     };
 };
