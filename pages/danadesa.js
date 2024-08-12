@@ -24,7 +24,7 @@ const options = {
 };
 
 export default function DanaDesa({ danadesa }) {
-    const [namaDesa, setNamaDesa] = useState("Alang Alang");
+    const [namaDesa, setNamaDesa] = useState("Nuniali");
 
     useEffect(() => {
         const storedNamaDesa = localStorage.getItem("namaDesa");
@@ -207,7 +207,7 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     )
-    const getDataDanaDesa = await fetch('http://localhost:3000/dana-desas');
+    const getDataDanaDesa = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/dana-desas');
     const json = await getDataDanaDesa.json();
     const danadesa = json.data;
 

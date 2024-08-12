@@ -3,7 +3,7 @@ import React, { useState} from "react";
 import Image from "next/image";
 
 export default function CarouselHome() {
-    let [namaDesa, setNamaDesa] = useState("Alang Alang");
+    let [namaDesa, setNamaDesa] = useState("Nuniali");
 
     useEffect(() => {
         namaDesa = localStorage.getItem("namaDesa");

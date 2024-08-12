@@ -14,7 +14,7 @@ import { FacebookIcon, TwitterIcon, WhatsappIcon, TelegramIcon, FacebookShareBut
 
 export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
     const router = useRouter()
-    let [namaDesa, setNamaDesa] = useState("Alang Alang");
+    let [namaDesa, setNamaDesa] = useState("Nuniali");
 
     useEffect(() => {
         namaDesa = localStorage.getItem("namaDesa");
@@ -114,7 +114,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
                             <div className="card bg-card-primary shadow-blog border-0">
                                 <Image
                                     alt="Image"
-                                    src={`http://localhost:3000${agenda.image}`}
+                                    src={`https://nuniali-51afdf69a4d2.herokuapp.com${agenda.image}`}
                                     width="450"
                                     height="400"
                                     quality={90}
@@ -147,7 +147,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
                                     <div key={item.id}>
                                         <PostList
                                             id={item.id}
-                                            image={`http://localhost:3000${item.image}`}
+                                            image={`https://nuniali-51afdf69a4d2.herokuapp.com${item.image}`}
                                             title={item.title}
                                             slug={item.slug}
                                             date={item.date}
@@ -162,7 +162,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
                                     <div key={item.id}>
                                         <AgendaList
                                             id={item.id}
-                                            image={`http://localhost:3000${item.image}`}
+                                            image={`https://nuniali-51afdf69a4d2.herokuapp.com${item.image}`}
                                             title={item.title}
                                             slug={item.slug}
                                             date={item.date}
@@ -190,9 +190,9 @@ export async function getServerSideProps({ params, res }) {
     );
 
     const [responseRandomAgenda, responseRandomPost, responseSingleAgenda] = await Promise.all([
-        fetch(`http://localhost:3000/agendas`),
-        fetch(`http://localhost:3000/beritas`),
-        fetch(`http://localhost:3000/agendas/${params.id}`)
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/agendas`),
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/beritas`),
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/agendas/${params.id}`)
     ]);
 
 

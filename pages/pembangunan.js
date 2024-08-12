@@ -100,7 +100,7 @@ export default function Pembangunan({ pembangunan }) {
                                             <SwiperSlide key={index}>
                                                 <div className="image-container">
                                                     <Image
-                                                        src={`http://localhost:3000${url}`}
+                                                        src={`https://nuniali-51afdf69a4d2.herokuapp.com${url}`}
                                                         alt={`Foto Pembangunan ${index + 1}`}
                                                         layout="fill"
                                                         className="img-fluid rounded image">
@@ -157,7 +157,7 @@ export default function Pembangunan({ pembangunan }) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch('http://localhost:3000/pembangunan');
+    const res = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/pembangunan');
     const data = await res.json();
     const pembangunan = data.data || [];
     console.log(pembangunan);

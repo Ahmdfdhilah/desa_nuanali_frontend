@@ -10,7 +10,7 @@ import BackToTop from "../components/BackToTop";
 const title = "Sejarah";
 
 export default function Sejarah({ posts }) {
-    let [namaDesa, setNamaDesa] = useState("Alang Alang");
+    let [namaDesa, setNamaDesa] = useState("Nuniali");
     let [namaKecamatan, setNamaKecamatan] = useState("Tragah");
 
     useEffect(() => {

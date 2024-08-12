@@ -43,9 +43,9 @@ const options = {
 
 const title = "Demografis Penduduk";
 
-export default function Penduduk({ gender, education, religion, pekerjaan, status, usia }) {
+export default function Penduduk({ gender, education, religion, sekolah, pekerjaan, status, usia }) {
 
-    let [namaDesa, setNamaDesa] = useState("Alang Alang");
+    let [namaDesa, setNamaDesa] = useState("Nuniali");
 
     useEffect(() => {
         namaDesa = localStorage.getItem("namaDesa");
@@ -54,6 +54,9 @@ export default function Penduduk({ gender, education, religion, pekerjaan, statu
 
     const dataGender = populateData(gender);
     const totalDataGender = getTotalData(gender);
+
+    const dataSekolah = populateData(sekolah);
+    const totalDataSekolah = getTotalData(sekolah);
 
     const dataEducation = populateData(education);
     const totalDataEducation = getTotalData(education);
@@ -145,6 +148,47 @@ export default function Penduduk({ gender, education, religion, pekerjaan, statu
                             </div>
                         </div>
                     </div>
+                    <div className="card bg-card-primary rounded shadow-card border-0 my-5" id="sekolah">
+                        <div className="card-header bg-color-secondary py-3">
+                            <h5 className="m-0 font-weight-bold text-color-primary">Demografi Jumlah Sekolah</h5>
+                        </div>
+                        <div className="card-body">
+                            <h5 className="text-color-primary">Grafik</h5>
+                            <div className="col-md-8 col-lg-5 mx-auto">
+                                <Doughnut
+                                    options={options}
+                                    data={dataSekolah}
+                                    width={400}
+                                    height={250}
+                                />
+                            </div>
+                            <h5 className="mt-5 text-color-primary">Tabel Data</h5>
+                            <div className="table-responsive mt-3">
+                                <table className="table table-bordered table-bordered-primary text-color-secondary">
+                                    <thead>
+                                        <tr>
+                                            <th className="fw-600">No</th>
+                                            <th className="fw-600">Jenis Sekolah</th>
+                                            <th className="fw-600">Jumlah</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {sekolah.map((item, index) =>
+                                            <tr key={item.id}>
+                                                <td>{++index}</td>
+                                                <td>{item.name}</td>
+                                                <td>{item.total}</td>
+                                            </tr>
+                                        )}
+                                        <tr>
+                                            <td colSpan="2" className="text-center fw-600">Jumlah Total</td>
+                                            <td className="fw-600">{totalDataSekolah}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
                     <div className="card bg-card-primary rounded shadow-card border-0 my-5" id="pendidikan">
                         <div className="card-header bg-color-secondary py-3">
@@ -214,9 +258,9 @@ export default function Penduduk({ gender, education, religion, pekerjaan, statu
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {religion.map(item =>
+                                        {religion.map((item, index) =>
                                             <tr key={item.id}>
-                                                <td>{item.id}</td>
+                                                <td>{++index}</td>
                                                 <td>{item.name}</td>
                                                 <td>{item.total}</td>
                                             </tr>
@@ -231,6 +275,8 @@ export default function Penduduk({ gender, education, religion, pekerjaan, statu
                             </div>
                         </div>
                     </div>
+
+
 
                     <div className="card bg-card-primary rounded shadow-card border-0 my-5" id="pekerjaan">
                         <div className="card-header bg-color-secondary py-3">
@@ -257,9 +303,9 @@ export default function Penduduk({ gender, education, religion, pekerjaan, statu
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {pekerjaan.map(item =>
+                                        {pekerjaan.map((item, index) =>
                                             <tr key={item.id}>
-                                                <td>{item.id}</td>
+                                                <td>{++index}</td>
                                                 <td>{item.name}</td>
                                                 <td>{item.total}</td>
                                             </tr>
@@ -381,20 +427,21 @@ export async function getServerSideProps({ res }) {
     const gender = await getDataGender.json();
     const getDataEducation = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/education`);
     const education = await getDataEducation.json();
-    const getDataReligion = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/religion`);
+    const getDataReligion = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/religions');
     const religion = await getDataReligion.json();
-    const getDataPekerjaan = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/pekerjaan`);
+    const getDataSekolah = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/sekolah`);
+    const sekolah = await getDataSekolah.json();
+    const getDataPekerjaan = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/pekerjaans`);
     const pekerjaan = await getDataPekerjaan.json();
     const getDataStatus = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/status`);
     const status = await getDataStatus.json();
     const getDataUsia = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/usia`);
     const usia = await getDataUsia.json();
     return {
-        props: { gender, education, religion, pekerjaan, status, usia }, 
+        props: { gender, education, religion, sekolah, pekerjaan: pekerjaan.data, status, usia },
     };
 };
 
-// Populate Data for ChartJS 
 function populateData(param) {
     const labels = [];
     const totals = [];

@@ -34,7 +34,7 @@ const optionsBarChart = {
 const title = "Demografis Wilayah";
 
 export default function Wilayah({ area }) {
-    const [namaDesa, setNamaDesa] = useState("Alang Alang");
+    const [namaDesa, setNamaDesa] = useState("Nuniali");
 
     useEffect(() => {
         const storedNamaDesa = localStorage.getItem("namaDesa");
@@ -143,7 +143,7 @@ export default function Wilayah({ area }) {
 
 // This gets called on every request to this page
 export async function getServerSideProps() {
-    const response = await fetch(`http://localhost:3000/wilayahs?sort=name&&order=ASC`);
+    const response = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/wilayahs?sort=name&&order=ASC`);
     const data = await response.json();
     console.log(data);
     

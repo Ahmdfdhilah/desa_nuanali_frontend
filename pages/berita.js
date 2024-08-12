@@ -9,7 +9,7 @@ import BackToTop from "../components/BackToTop";
 const title = "Berita";
 
 export default function Berita({ posts }) {
-    let [namaDesa, setNamaDesa] = useState("Alang Alang");
+    let [namaDesa, setNamaDesa] = useState("Nuniali");
 
     useEffect(() => {
         namaDesa = localStorage.getItem("namaDesa");
@@ -48,7 +48,7 @@ export default function Berita({ posts }) {
                             <div className="col-sm-6 col-md-6 col-lg-4" key={post.id}>
                                 <PostCard
                                     id={post.id}
-                                    image={`http://localhost:3000${post.image}`}
+                                    image={`https://nuniali-51afdf69a4d2.herokuapp.com${post.image}`}
                                     title={post.title}
                                     slug={post.slug}
                                     author={post.author}
@@ -74,7 +74,7 @@ export async function getServerSideProps({ res }) {
         'public, s-maxage=10, stale-while-revalidate=59'
     )
 
-    const response = await fetch(`http://localhost:3000/beritas`);
+    const response = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/beritas`);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }

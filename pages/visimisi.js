@@ -11,7 +11,7 @@ const title = "Visi MIsi";
 
 export default function Sejarah({ posts }) {
 
-    let [namaDesa, setNamaDesa] = useState("Alang Alang");
+    let [namaDesa, setNamaDesa] = useState("Nuniali");
 
     useEffect(() => {
         namaDesa = localStorage.getItem("namaDesa");

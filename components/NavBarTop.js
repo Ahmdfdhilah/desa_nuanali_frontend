@@ -107,8 +107,8 @@ export default function NavBarTop() {
                             <Image
                                 alt="logo desa"
                                 src={imgLogo}
-                                height="50"
-                                width="50"
+                                height="40"
+                                width="40"
                                 className="img-fluid"
                             />{" "}
                             <div>
@@ -172,15 +172,42 @@ export default function NavBarTop() {
                                 </ul>
                             </li>
                             <li className="nav-item dropdown ms-lg-1">
+                                <a className="nav-link dropdown-toggle text-color-tertiary" href="#" id="informasiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Desa
+                                </a>
+                                <ul className="dropdown-menu bg-color-primary" aria-labelledby="informasiDropdown">
+                                    {/* <li className="me-2">
+                                        <ActiveLink activeClassName="active" href="/sekolah">
+                                            <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Sekolah</a>
+                                        </ActiveLink>
+                                    </li> */}
+                                    <li className="me-2">
+                                        <ActiveLink activeClassName="active" href="/lembaga">
+                                            <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Lembaga</a>
+                                        </ActiveLink>
+                                    </li>
+                                    <li className="me-2">
+                                        <ActiveLink activeClassName="active" href="/tempatwisata">
+                                            <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Tempat Wisata</a>
+                                        </ActiveLink>
+                                    </li>
+                                    <li className="me-2">
+                                        <ActiveLink activeClassName="active" href="/prestasi">
+                                            <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Prestasi</a>
+                                        </ActiveLink>
+                                    </li>
+                                    {/* <li className="me-2">
+                                        <ActiveLink activeClassName="active" href="/product">
+                                            <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Produk</a>
+                                        </ActiveLink>
+                                    </li> */}
+                                </ul>
+                            </li>
+                            <li className="nav-item dropdown ms-lg-1">
                                 <a className="nav-link dropdown-toggle text-color-tertiary" href="#" id="chartDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Demografis
                                 </a>
                                 <ul className="dropdown-menu bg-color-primary" aria-labelledby="chartDropdown">
-                                    <li className="me-2">
-                                        <ActiveLink activeClassName="active" href="/administrasi">
-                                            <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Administrasi</a>
-                                        </ActiveLink>
-                                    </li>
                                     <li className="me-2">
                                         <ActiveLink activeClassName="active" href="/penduduk">
                                             <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Penduduk</a>

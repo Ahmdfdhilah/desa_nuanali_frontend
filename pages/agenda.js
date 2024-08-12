@@ -9,7 +9,7 @@ import BackToTop from "../components/BackToTop";
 const title = "Agenda";
 
 export default function Agenda({ agendas }) {
-    let [namaDesa, setNamaDesa] = useState("Alang Alang");
+    let [namaDesa, setNamaDesa] = useState("Nuniali");
 
     useEffect(() => {
         namaDesa = localStorage.getItem("namaDesa");
@@ -51,7 +51,7 @@ export default function Agenda({ agendas }) {
                                 <AgendaCard
                                     id={agenda.id}
                                     slug={agenda.slug}
-                                    image={`http://localhost:3000${agenda.image}`}
+                                    image={`https://nuniali-51afdf69a4d2.herokuapp.com${agenda.image}`}
                                     title={agenda.title}
                                     location={agenda.location}
                                     date={agenda.date}
@@ -74,7 +74,7 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     )
-    const response = await fetch(`http://localhost:3000/agendas`);
+    const response = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/agendas`);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
