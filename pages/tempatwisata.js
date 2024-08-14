@@ -1,25 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import NavBarTop from '../components/NavBarTop';
 import Breadcrumb from '../components/Breadcrumb';
 import PlaceCard from '../components/PlaceCard';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const title = "Tempat Wisata";
-
-const staticPlaces = [
-    { id: 1, title: "Pantai Kuta", description: "Pantai Kuta adalah salah satu pantai terkenal di Bali dengan pasir putih dan ombak yang cocok untuk berselancar.", excerpt: "Pantai Kuta, Bali", images: ["https://via.placeholder.com/600x400?text=Pantai+Kuta+1", "https://via.placeholder.com/600x400?text=Pantai+Kuta+2", "https://via.placeholder.com/600x400?text=Pantai+Kuta+3"] },
-    { id: 2, title: "Gunung Bromo", description: "Gunung Bromo adalah gunung berapi aktif di Jawa Timur yang menawarkan pemandangan matahari terbit yang menakjubkan.", excerpt: "Gunung Bromo, Jawa Timur", images: ["https://via.placeholder.com/600x400?text=Gunung+Bromo+1", "https://via.placeholder.com/600x400?text=Gunung+Bromo+2", "https://via.placeholder.com/600x400?text=Gunung+Bromo+3"] },
-    { id: 3, title: "Candi Borobudur", description: "Candi Borobudur adalah candi Buddha terbesar di dunia yang terletak di Jawa Tengah, Indonesia.", excerpt: "Candi Borobudur, Jawa Tengah", images: ["https://via.placeholder.com/600x400?text=Candi+Borobudur+1", "https://via.placeholder.com/600x400?text=Candi+Borobudur+2", "https://via.placeholder.com/600x400?text=Candi+Borobudur+3"] },
-];
-
 const ITEMS_PER_PAGE = 3;
 
-export default function TempatWisata() {
+export default function TempatWisata({ places }) {
     const [currentPage, setCurrentPage] = useState(1);
 
-    const totalItems = staticPlaces.length;
+    const totalItems = places.length;
     const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
     const handlePageChange = (page) => {
@@ -29,7 +24,11 @@ export default function TempatWisata() {
     };
 
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const currentPlaces = staticPlaces.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    const currentPlaces = places.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+    useEffect(() => {
+        AOS.init(); // Initialize AOS
+    }, []);
 
     return (
         <>
@@ -132,7 +131,7 @@ export default function TempatWisata() {
 
                 <div className="container my-5">
                     <div className="main-section">
-                        <section className="intro">
+                        <section className="intro" data-aos="fade-up">
                             <h1>Temukan Tempat Wisata Terbaik Kami</h1>
                             <p>Jelajahi tempat-tempat wisata yang menawarkan keindahan dan keunikan dari berbagai penjuru Indonesia. Setiap lokasi memiliki daya tarik dan karakter tersendiri yang patut untuk dikunjungi.</p>
                         </section>
@@ -145,6 +144,7 @@ export default function TempatWisata() {
                                     title={place.title}
                                     excerpt={place.excerpt}
                                     images={place.images}
+                                    data-aos="fade-up"
                                 />
                             ))}
                         </div>
@@ -154,14 +154,16 @@ export default function TempatWisata() {
                                 onClick={() => handlePageChange(currentPage - 1)}
                                 disabled={currentPage === 1}
                                 className={currentPage === 1 ? 'disabled' : ''}
+                                data-aos="fade-up"
                             >
                                 Previous
                             </button>
-                            <span className="page-number">Page {currentPage} of {totalPages}</span>
+                            <span className="page-number" data-aos="fade-up">Page {currentPage} of {totalPages}</span>
                             <button
                                 onClick={() => handlePageChange(currentPage + 1)}
                                 disabled={currentPage === totalPages}
                                 className={currentPage === totalPages ? 'disabled' : ''}
+                                data-aos="fade-up"
                             >
                                 Next
                             </button>
@@ -175,4 +177,24 @@ export default function TempatWisata() {
             <BackToTop />
         </>
     );
+}
+
+export async function getServerSideProps() {
+    const res = await fetch('http://localhost:3000/wisata');
+    const datas = await res.json();
+    const data = datas.data;
+
+    const places = data.map(place => ({
+        id: place.id,
+        title: place.title,
+        description: place.body,
+        excerpt: `${place.body.slice(0, 150)}<a href="/tempatwisata/${place.id}">....Baca Selengkapnya</a>`,
+        images: place.foto || []
+    }));
+
+    return {
+        props: {
+            places
+        }
+    };
 }

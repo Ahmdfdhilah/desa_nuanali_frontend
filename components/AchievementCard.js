@@ -1,27 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import AOS styles
 
 export default function AchievementCard({ title, description, images }) {
-    const [currentImage, setCurrentImage] = useState(0);
-
     useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentImage((prev) => (prev < images.length - 1 ? prev + 1 : 0));
-        }, 3000); // Change image every 3 seconds
-
-        return () => clearInterval(interval); // Cleanup interval on component unmount
-    }, [images.length]);
+        AOS.init({
+            duration: 1000, // Duration of animation
+            easing: 'ease-in-out', // Easing function
+            once: true // Animation will happen only once
+        });
+    }, []);
 
     return (
-        <div className="achievement-card">
+        <div className="achievement-card" data-aos="fade-up">
             <div className="image-container">
-                {images.map((image, index) => (
-                    <img
-                        key={index}
-                        src={image}
-                        alt={title}
-                        className={index === currentImage ? 'active' : ''}
-                    />
-                ))}
+                <img
+                    src={`http://localhost:3000${images[0]}`} // Only displaying one image
+                    alt={title}
+                />
             </div>
             <div className="info">
                 <h3>{title}</h3>
@@ -52,11 +48,6 @@ export default function AchievementCard({ title, description, images }) {
                     position: absolute;
                     top: 0;
                     left: 0;
-                    opacity: 0;
-                    transition: opacity 1s ease-in-out;
-                }
-                .image-container img.active {
-                    opacity: 1;
                 }
                 .info {
                     padding: 15px;

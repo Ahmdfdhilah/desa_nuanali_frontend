@@ -1,37 +1,34 @@
-import Image from "next/image"
-import Link from "next/link"
-import { FaUser, FaRegCalendarAlt, FaArrowRight } from "react-icons/fa";
-
-export default function VideoCard({ title, src }) {
-
+export default function VideoCard({ src, isVertical }) {
     return (
         <>
             <style jsx>{`
-                .embed-responsive {
+                .video-container {
                     position: relative;
-                    display: block;
                     width: 100%;
-                    padding: 0;
-                    overflow: hidden;
+                    padding-top: 56.25%; /* Default to 16:9 aspect ratio */
                 }
 
-                .embed-responsive-item,
-                .embed-responsive iframe {
+                .video-container.vertical {
+                    padding-top: 177.77%; /* 9:16 aspect ratio */
+                }
+
+                .video-container iframe {
+                    position: absolute;
                     top: 0;
-                    bottom: 0;
                     left: 0;
                     width: 100%;
-                    height: 290px;
+                    height: 100%;
                     border: 0;
                 }
             `}</style>
 
-            <div className="embed-responsive">
-                <iframe src={src} className="rounded"
-                    title={title} 
+            <div className={`video-container ${isVertical ? 'vertical' : ''}`}>
+                <iframe
+                    src={src}
+                    className="rounded"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen>
-                </iframe>
+                    allowFullScreen
+                ></iframe>
             </div>
         </>
     );

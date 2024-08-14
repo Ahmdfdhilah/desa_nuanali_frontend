@@ -1,7 +1,10 @@
 import Image from "next/image";
 import { FaWhatsapp } from "react-icons/fa";
+import Link from "next/link";
 
-export default function ProductCard({ name, price, image, phone, description, location, contactPerson, seller }) {
+export default function ProductCard({ id, slug, name, price, image, phone, description, location, contactPerson, seller }) {
+    const productUrl = `/lapak/${slug || id}`;
+
     return (
         <>
             <style jsx>
@@ -59,6 +62,8 @@ export default function ProductCard({ name, price, image, phone, description, lo
                     border-top: 1px solid var(--border-color-primary);
                     padding: 0.5rem; /* Adjusted padding */
                     display: flex;
+                    align-items: center;
+                    justify-content: space-between;
                 }
                 .btn-whatsapp {
                     background-color: #25D366;
@@ -78,17 +83,35 @@ export default function ProductCard({ name, price, image, phone, description, lo
                 .btn-whatsapp i {
                     margin-right: 0.5rem;
                 }
+                .btn-detail {
+                    background-color: #007bff;
+                    border-color: #007bff;
+                    color: white;
+                    text-decoration: none;
+                    padding: 0.5rem 1rem;
+                    border-radius: 0.25rem;
+                    display: inline-flex;
+                    align-items: center;
+                    font-size: 0.875rem; /* Adjust font size */
+                }
+                .btn-detail:hover {
+                    background-color: #0056b3;
+                    border-color: #004085;
+                }
+                .btn-detail i {
+                    margin-right: 0.5rem;
+                }
                 `}
             </style>
 
             <div className="card bg-card-primary shadow-custom rounded-3">
                 <div className="card-img">
-                    <Image alt={name} src={image} width={350} height={200} quality={90} className="img-fluid rounded-top" />
+                    <Image alt={name} src={`http://localhost:3000${image}`} width={350} height={200} quality={90} className="img-fluid rounded-top" />
                 </div>
                 <div className="card-body">
                     <h6 className="card-title">{name}</h6>
                     <h5 className="card-price">Rp. {price}</h5>
-                    <p className="card-description">{description}</p>
+                    <p className="card-description">{`${description.slice(0, 150)}`}</p>
                     <p className="card-info">Lokasi: {location}</p>
                     <p className="card-info">Kontak: {contactPerson}</p>
                     <p className="card-info">Penjual: {seller}</p>
@@ -97,6 +120,9 @@ export default function ProductCard({ name, price, image, phone, description, lo
                     <a href={`https://wa.me/${phone}?text=Saya%20ingin%20memesan%20${name}`} className="btn-whatsapp" rel="noreferrer" target="_blank">
                         <i><FaWhatsapp /></i>Whatsapp
                     </a>
+                    <Link href={productUrl}>
+                        <a className="btn-detail">Lihat Detail</a>
+                    </Link>
                 </div>
             </div>
         </>

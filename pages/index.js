@@ -12,13 +12,10 @@ import BackToTop from "../components/BackToTop";
 import StatisticLink from "../components/StatisticLink";
 import SistemDesa from "../components/SistemDesa";
 import imageLogo from "../public/logo-nuanali.png";
-import Gallery from 'react-photo-gallery';
-import Carousel, { Modal, ModalGateway } from 'react-images';
+import dynamic from 'next/dynamic';
 import { FaArrowRight, FaArrowDown } from "react-icons/fa";
-// Swiper
-// Import Swiper React components
+
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import SwiperCore, { Autoplay } from 'swiper';
 import SwiperCore, { Autoplay, Pagination } from 'swiper';
 import 'swiper/css';
 import "swiper/css/pagination"
@@ -30,24 +27,22 @@ import 'aos/dist/aos.css';
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination]);
 
-export default function Home({ posts, agendas, videos, photos }) {
-    let [namaDesa, setNamaDesa] = useState("Nuniali");
-    let [namaKecamatan, setNamaKecamatan] = useState("Seram Bagian Barat");
+// Dynamically import Gallery component
+const Gallery = dynamic(() => import('react-photo-gallery'), { ssr: false });
+const Carousel = dynamic(() => import('react-images'), { ssr: false });
 
+export default function Home({ posts, agendas, videos, photos }) {
     useEffect(() => {
         AOS.init({
             once: true,
         });
-        namaDesa = localStorage.getItem("namaDesa");
-        setNamaDesa(namaDesa);
-        namaKecamatan = localStorage.getItem("namaKecamatan");
-        setNamaKecamatan(namaKecamatan);
-    });
+    }, []);
 
     // Take only 3 item as featured
     const featuredPost = posts.slice(0, 4);
     const featuredAgenda = agendas.slice(0, 4);
-    const featuredVideo = videos.slice(0, 2);
+    const horizontalVideos = videos.filter(video => !video.isVertical);
+    const featuredVideo = horizontalVideos.slice(0, 3);
     const featuredPhotos = photos.slice(0, 6);
 
     // For Image Lightbox & Carousel 
@@ -101,14 +96,14 @@ export default function Home({ posts, agendas, videos, photos }) {
             </style>
 
             <Head>
-                <title>Selamat Datang di Situs Resmi Desa {namaDesa}</title>
-                <meta name="description" content={`Website Desa ${namaDesa}`} />
+                <title>Selamat Datang di Situs Resmi Desa Nuniali</title>
+                <meta name="description" content={`Website Desa Nuniali`} />
                 <link rel="icon" href="/favicon.ico" />
                 {/* <!-- Open Graph / Facebook --> */}
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content={process.env.NEXT_PUBLIC_API_URL} />
-                <meta property="og:title" content={`Situs Resmi Desa ${namaDesa}`} />
-                <meta property="og:description" content={`Website Resmi Desa ${namaDesa}. Media komunikasi dan transparansi Pemerintah Desa`} />
+                <meta property="og:title" content={`Situs Resmi Desa Nuniali`} />
+                <meta property="og:description" content={`Website Resmi Desa Nuniali. Media komunikasi dan transparansi Pemerintah Desa`} />
                 <meta property="og:image" content={`${process.env.NEXT_PUBLIC_API_URL}/metalogo.jpg`}></meta>
             </Head>
 
@@ -128,7 +123,7 @@ export default function Home({ posts, agendas, videos, photos }) {
                             </div>
                             <div className="col-md-7" data-aos="fade-up" data-aos-duration="1500">
                                 <div className="text-center text-md-start mt-3 mt-md-0">
-                                    <h3 className="pb-2 text-color-primary">Website Desa {namaDesa}</h3>
+                                    <h3 className="pb-2 text-color-primary">Website Desa Nuniali</h3>
                                     <p className="text-color-secondary" id="scroll-to-statistic">
                                     Website Resmi Desa Negeri Nuniali, Kecamatan Taniwel, Seram Bagian Barat, Maluku. Media komunikasi dan transparansi Pemerintah Desa
                                     </p>
@@ -195,7 +190,7 @@ export default function Home({ posts, agendas, videos, photos }) {
                                     <AgendaCard
                                         id={agenda.id}
                                         slug={agenda.slug}
-                                        image={agenda.image}
+                                        image={`http://localhost:3000${agenda.image}`}
                                         title={agenda.title}
                                         location={agenda.location}
                                         date={agenda.date}
@@ -205,31 +200,6 @@ export default function Home({ posts, agendas, videos, photos }) {
                         </Swiper>
                     </div>
                 </div>
-
-                {/* <div className="container my-5 py-4">
-                    <div className="d-flex align-items-center justify-content-between mb-4">
-                        <h3 className="mb-0">Agenda</h3>
-                        <Link href="/agenda">
-                            <a className="text-decoration-none">All Agenda
-                                <i className="ms-2"><FaArrowRight /></i>
-                            </a>
-                        </Link>
-                    </div>
-                    <div className="row g-4">
-                        {featuredAgenda.map(agenda =>
-                            <div className="col-lg-6" key={agenda.id}>
-                                <AgendaCard
-                                    id={agenda.id}
-                                    slug={agenda.slug}
-                                    image={agenda.image}
-                                    title={agenda.title}
-                                    location={agenda.location}
-                                    date={agenda.date}
-                                    time={agenda.time} />
-                            </div>
-                        )}
-                    </div>
-                </div> */}
 
                 <div className="container my-5 py-4" id="scroll-to">
                     <div className="d-flex align-items-center justify-content-between mb-4">
@@ -254,20 +224,20 @@ export default function Home({ posts, agendas, videos, photos }) {
                                     "spaceBetween": 24
                                 },
                                 "640": {
-                                    "slidesPerView": 2,
+                                    "slidesPerView": 1,
                                     "spaceBetween": 24
                                 },
                                 "768": {
-                                    "slidesPerView": 2,
+                                    "slidesPerView": 1,
                                     "spaceBetween": 24
                                 },
                                 "1024": {
-                                    "slidesPerView": 3,
+                                    "slidesPerView": 2,
                                     "spaceBetween": 24
                                 }
                             }}
                             autoplay={{
-                                "delay": 4000,
+                                "delay": 6000,
                                 "disableOnInteraction": false
                             }}
                             pagination={{
@@ -280,70 +250,14 @@ export default function Home({ posts, agendas, videos, photos }) {
                                 <SwiperSlide key={post.id}>
                                     <PostCard
                                         id={post.id}
-                                        image={post.image}
-                                        title={post.title}
                                         slug={post.slug}
-                                        author={post.author}
-                                        date={post.date}
+                                        image={`http://localhost:3000${post.image}`}
+                                        title={post.title}
+                                        date={post.createdAt}
                                         excerpt={post.excerpt} />
                                 </SwiperSlide>
                             )}
                         </Swiper>
-                    </div>
-                </div>
-
-                {/* <div className="container my-5 py-4">
-                    <div className="d-flex align-items-center justify-content-between mb-4">
-                        <h3 className="mb-0">Blog</h3>
-                        <Link href="/blog">
-                            <a className="text-decoration-none">All Blog
-                                <i className="ms-2"><FaArrowRight /></i>
-                            </a>
-                        </Link>
-                    </div>
-                    <div className="row g-4">
-                        {featuredPost.map(post =>
-                            <div className="col-sm-6 col-md-6 col-lg-4" key={post.id}>
-                                <PostCard
-                                    id={post.id}
-                                    image={post.image}
-                                    title={post.title}
-                                    slug={post.slug}
-                                    author={post.author}
-                                    date={post.date}
-                                    excerpt={post.excerpt} />
-                            </div>
-                        )}
-                    </div>
-                </div> */}
-
-                <div className="container my-5 py-4">
-                    <div className="d-flex align-items-center justify-content-between mb-4">
-                        <h3 className="mb-0 text-color-primary">Foto</h3>
-                        <Link href="/foto">
-                            <a className="text-decoration-none">Semua Foto
-                                <i className="ms-2"><FaArrowRight /></i>
-                            </a>
-                        </Link>
-                    </div>
-                    <div className="row g-4">
-                        <Gallery photos={featuredPhotos} onClick={openLightbox} />
-                        <ModalGateway>
-                            {viewerIsOpen ? (
-                                <Modal onClose={closeLightbox}>
-                                    <Carousel
-                                        styles={lightboxStyles}
-                                        showNavigationOnTouchDevice={true}
-                                        currentIndex={currentImage}
-                                        views={featuredPhotos.map(x => ({
-                                            ...x,
-                                            srcset: x.srcSet,
-                                            caption: x.title
-                                        }))}
-                                    />
-                                </Modal>
-                            ) : null}
-                        </ModalGateway>
                     </div>
                 </div>
 
@@ -358,12 +272,34 @@ export default function Home({ posts, agendas, videos, photos }) {
                     </div>
                     <div className="row g-4">
                         {featuredVideo.map(video =>
-                            <div className="col-md-6" key={video.title}>
-                                <VideoCard title={video.title} src={video.src} />
+                            <div key={video.id} className="col-lg-4 col-md-6 col-12">
+                                 {console.log(video)}
+                                <VideoCard
+                                    src={video.link}
+                                />
                             </div>
                         )}
                     </div>
                 </div>
+
+                <section className="py-5">
+                    <div className="container">
+                        <div className="d-flex align-items-center justify-content-between mb-4">
+                            <h3 className="mb-0 text-color-primary">Galeri Foto</h3>
+                            <Link href="/galeri-foto">
+                                <a className="text-decoration-none">Lihat Galeri
+                                    <i className="ms-2"><FaArrowRight /></i>
+                                </a>
+                            </Link>
+                        </div>
+                        <div className="row g-4">
+                            <Gallery photos={featuredPhotos} onClick={openLightbox} />
+                        </div>
+                        {/* Add Lightbox Component */}
+                    </div>
+                </section>
+
+                <BackToTop />
 
                 <SistemDesa />
 
@@ -371,27 +307,38 @@ export default function Home({ posts, agendas, videos, photos }) {
 
             <Footer />
 
-            <BackToTop />
         </>
     );
-};
+}
 
-// This gets called on every request to this page
-export async function getServerSideProps({ res }) {
-    res.setHeader(
-        'Cache-Control',
-        'public, s-maxage=10, stale-while-revalidate=59'
-    )
-    const getAllPosts = await fetch(`https://web-profile-desa.vercel.app/api/post`);
-    const posts = await getAllPosts.json();
-    const getAllAgenda = await fetch(`https://web-profile-desa.vercel.app/api/agenda`);
-    const agendas = await getAllAgenda.json();
-    const getAllVideo = await fetch(`https://web-profile-desa.vercel.app/api/video`);
-    const videos = await getAllVideo.json();
-    const getAllPhotos = await fetch(`https://web-profile-desa.vercel.app/api/photo`);
-    const photos = await getAllPhotos.json();
+export async function getServerSideProps() {
+    const [postsRes, agendasRes, videosRes, photosRes] = await Promise.all([
+        fetch(`http://localhost:3000/beritas`),
+        fetch(`http://localhost:3000/agendas`),
+        fetch(`http://localhost:3000/videos`),
+        fetch(`http://localhost:3000/photos`)
+    ]);
+
+    const [posts, agendas, videos, photos] = await Promise.all([
+        postsRes.json(),
+        agendasRes.json(),
+        videosRes.json(),
+        photosRes.json()
+    ]);
+
+    const photosData = photos.data.map(photo => ({
+        src: `http://localhost:3000${photo.src}`,
+        width: 4, // Adjust width as needed
+        height: 3, // Adjust height as needed
+        title: photo.title
+    }));
+
     return {
-        // will be passed to the page component as props
-        props: { posts, agendas, videos, photos },
+        props: {
+            posts:posts.data,
+            agendas:agendas.data,
+            videos,
+            photos:photosData
+        }
     };
-};
+}

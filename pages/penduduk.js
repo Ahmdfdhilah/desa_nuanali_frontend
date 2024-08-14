@@ -427,11 +427,11 @@ export async function getServerSideProps({ res }) {
     const gender = await getDataGender.json();
     const getDataEducation = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/education`);
     const education = await getDataEducation.json();
-    const getDataReligion = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/religions');
+    const getDataReligion = await fetch('http://localhost:3000/religions');
     const religion = await getDataReligion.json();
-    const getDataSekolah = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/sekolah`);
+    const getDataSekolah = await fetch(`http://localhost:3000/sekolah`);
     const sekolah = await getDataSekolah.json();
-    const getDataPekerjaan = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/pekerjaans`);
+    const getDataPekerjaan = await fetch(`http://localhost:3000/pekerjaans`);
     const pekerjaan = await getDataPekerjaan.json();
     const getDataStatus = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/status`);
     const status = await getDataStatus.json();

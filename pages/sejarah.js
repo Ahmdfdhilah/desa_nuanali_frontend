@@ -52,12 +52,6 @@ export default function Sejarah({ posts }) {
                     <div className="col-lg-10 mx-auto">
                         <div className="card bg-card-primary border-0 shadow-sm px-3 py-3 mb-4">
                             <h3 className="text-color-primary">Sejarah Negeri Nuniali</h3>
-                            <Image
-                                src="/hero.webp"
-                                alt="Foto Desa"
-                                className="img-fluid rounded my-3"
-                                width="1920"
-                                height="960" />
                             <h5 className="mt-4 text-color-primary">Uraian Singkat Profil Desa</h5>
                             <p className="text-color-secondary">
                                 Negeri Nuniali, sebuah desa di Kecamatan Taniwel, Kabupaten Seram Bagian Barat, memiliki sejarah panjang sebagai pusat peradaban di Maluku.

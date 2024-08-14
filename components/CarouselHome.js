@@ -1,126 +1,132 @@
-import { useEffect } from "react";
-import React, { useState} from "react";
+import React from "react";
 import Image from "next/image";
 
 export default function CarouselHome() {
-    let [namaDesa, setNamaDesa] = useState("Nuniali");
-
-    useEffect(() => {
-        namaDesa = localStorage.getItem("namaDesa");
-        setNamaDesa(namaDesa);
-    });
-
     return (
         <>
             <style jsx>{`
+                .carousel {
+                    position: relative;
+                    width: 100%;
+                    height: 80vh;
+                    overflow: hidden;
+                }
+                .carousel-inner {
+                    height: 100%;
+                }
+                .carousel-item {
+                    height: 100%;
+                    position: relative;
+                }
+                .carousel-item img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover; /* Maintain zoom effect */
+                }
                 .carousel-overlay {
                     position: absolute;
                     top: 0;
                     left: 0;
                     width: 100%;
-                    height: 98%;
+                    height: 100%;
                     background-color: rgba(0, 0, 0, 0.4);
+                    z-index: 1;
                 }
                 .carousel-caption {
-                    bottom: 17em;
+                    position: absolute;
+                    bottom: 45%;
+                    left: 0;
+                    width: 100%;
+                    color: white;
+                    text-align: center;
+                    z-index: 2;
+                    padding: 0 20px; /* Ensure padding for better readability */
                 }
-                .carousel-text {
-                    font-weight: 400;
-                    font-size: 20px;
+                .carousel-caption h1 {
+                    font-size: 2rem;
+                    margin: 0;
+                }
+                .carousel-caption p {
+                    font-size: 1.125rem;
                 }
                 @media (max-width: 575.98px) {
                     .carousel-caption h1 {
-                        font-size: 24px !important;
+                        font-size: 1.5rem;
                     }
-                    .carousel-caption {
-                        bottom: 5.5em !important;
-                    }
-                    .carousel-text {
-                        font-size: 16px !important;
+                    .carousel-caption p {
+                        font-size: 0.875rem;
                     }
                 }
                 @media (min-width: 576px) and (max-width: 767.98px) {
                     .carousel-caption h1 {
-                        font-size: 32px !important;
+                        font-size: 1.75rem;
                     }
-                    .carousel-caption {
-                        bottom: 8em !important;
-                    }
-                }
-                @media (min-width: 768px) and (max-width: 991.98px) {
-                    .carousel-caption {
-                        bottom: 11em !important;
+                    .carousel-caption p {
+                        font-size: 1rem;
                     }
                 }
-                @media (min-width: 992px) and (max-width: 1199.98px) {
-                    .carousel-caption {
-                        bottom: 12em !important;
+                @media (min-width: 768px) {
+                    .carousel-caption h1 {
+                        font-size: 2rem;
                     }
-                }
-                @media (min-width: 1600px) {
-                    .carousel-caption {
-                        bottom: 24em !important;
+                    .carousel-caption p {
+                        font-size: 1.125rem;
                     }
                 }
             `}</style>
 
             <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
-                {/* <div className="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                </div> */}
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        <Image
-                            alt="Carousel"
-                            src="/hero.webp"
-                            width="1920"
-                            height="960"
-                            className="d-block w-100 carousel-zoom"
-                        />
+                        <div className="carousel-image-wrapper">
+                            <Image
+                                alt="Carousel"
+                                src="/hero.webp"
+                                layout="fill"
+                                objectFit="cover"
+                                className="carousel-zoom"
+                            />
+                        </div>
                         <div className="carousel-overlay"></div>
                         <div className="carousel-caption">
-                            <h1>Selamat Datang di Web Desa {namaDesa}</h1>
-                            <p className="carousel-text">Pusat Layanan Informasi Resmi Desa</p>
+                            <h1>Selamat Datang di Web Desa Nuniali</h1>
+                            <p>Pusat Layanan Informasi Resmi Desa</p>
                         </div>
                     </div>
                     <div className="carousel-item">
-                        <Image
-                            alt="Carousel"
-                            src="/hero1.jpg"
-                            width="1920"
-                            height="960"
-                            className="d-block w-100 carousel-zoom"
-                        />
+                        <div className="carousel-image-wrapper">
+                            <Image
+                                alt="Carousel"
+                                src="/hero1.jpg"
+                                layout="fill"
+                                objectFit="cover"
+                                className="carousel-zoom"
+                            />
+                        </div>
                         <div className="carousel-overlay"></div>
                         <div className="carousel-caption">
                             <h1>Desa Rukun & Gotong Royong</h1>
-                            <p className="carousel-text">Website Desa Kreatif dan Inovatifff</p>
+                            <p>Website Desa Kreatif dan Inovatifff</p>
                         </div>
                     </div>
                     <div className="carousel-item">
-                        <Image
-                            alt="Carousel"
-                            src="/hero2.jpg"
-                            width="1920"
-                            height="960"
-                            className="d-block w-100 carousel-zoom"
-                        />
+                        <div className="carousel-image-wrapper">
+                            <Image
+                                alt="Carousel"
+                                src="/hero2.jpg"
+                                layout="fill"
+                                objectFit="cover"
+                                className="carousel-zoom"
+                            />
+                        </div>
                         <div className="carousel-overlay"></div>
                         <div className="carousel-caption">
                             <h1>Desa Asri & Bahagia</h1>
-                            <p className="carousel-text">Desa Asri, Damai dan Bahagia</p>
+                            <p>Desa Asri, Damai dan Bahagia</p>
                         </div>
                     </div>
                 </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Previous</span>
-                </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Next</span>
-                </button>
+               
             </div>
         </>
     );

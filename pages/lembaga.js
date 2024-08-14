@@ -5,18 +5,11 @@ import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const title = "Lembaga di Desa";
-const staticInstitutions = [
-    { id: 1, name: "Kantor Desa", description: "Kantor pusat administrasi desa yang melayani berbagai kebutuhan administrasi dan masyarakat.", image: "https://via.placeholder.com/600x400?text=Kantor+Desa", contact: "0821-1234-5678", layout: "left" },
-    { id: 2, name: "Puskesmas", description: "Fasilitas kesehatan pertama yang memberikan layanan medis dasar kepada masyarakat.", image: "https://via.placeholder.com/600x400?text=Puskesmas", contact: "0821-2345-6789", layout: "right" },
-    { id: 3, name: "Sekolah Dasar", description: "Sekolah untuk pendidikan dasar anak-anak di desa.", image: "https://via.placeholder.com/600x400?text=Sekolah+Dasar", contact: "0821-3456-7890", layout: "left" },
-    { id: 4, name: "Posyandu", description: "Pos Pelayanan Terpadu untuk kesehatan ibu dan anak.", image: "https://via.placeholder.com/600x400?text=Posyandu", contact: "0821-4567-8901", layout: "right" },
-    { id: 5, name: "Balai Desa", description: "Tempat kegiatan komunitas dan acara desa, termasuk rapat dan kegiatan sosial.", image: "https://via.placeholder.com/600x400?text=Balai+Desa", contact: "0821-5678-9012", layout: "left" },
-];
 
-export default function Lembaga() {
+export default function Lembaga({ lembaga }) {
     useEffect(() => {
         AOS.init({ duration: 1000 });
     }, []);
@@ -75,51 +68,11 @@ export default function Lembaga() {
                     color: var(--text-color-secondary);
                     margin-top: 10px;
                 }
-                .item-container.left .item-details {
-                    order: 1;
-                }
-                .item-container.left img {
+                .item-container img {
                     order: 0;
                 }
-                .item-container.right .item-details {
+                .item-container .item-details {
                     order: 1;
-                }
-                .item-container.right img {
-                    order: 0;
-                }
-                @media (max-width: 768px) {
-                 .item-container.left .item-details {
-                    order: 1;
-                }
-                .item-container.left img {
-                    order: 0;
-                }
-                .item-container.right .item-details {
-                    order: 1;
-                }
-                .item-container.right img {
-                    order: 0;
-                }
-                }
-                .side-content {
-                    background-color: var(--bg-secondary);
-                    padding: 20px;
-                    border-radius: 10px;
-                    margin-top: 20px;
-                }
-                .side-content h2 {
-                    font-size: 1.8em;
-                    color: var(--text-color-primary);
-                }
-                .side-content p {
-                    font-size: 1em;
-                    color: var(--text-color-secondary);
-                }
-                .side-content img {
-                    width: 100%;
-                    height: auto;
-                    border-radius: 10px;
-                    margin-top: 10px;
                 }
                 @media (max-width: 768px) {
                     .item-container {
@@ -151,19 +104,14 @@ export default function Lembaga() {
 
                 <div className="container my-5">
                     <div className="main-section">
-                        <section className="side-content" data-aos="fade-up">
-                            <h2>Apa Itu Lembaga di Desa?</h2>
-                            <p>Lembaga-lembaga di desa memainkan peran kunci dalam kehidupan sehari-hari masyarakat. Mereka menyediakan layanan penting, seperti administrasi, kesehatan, pendidikan, dan kegiatan komunitas. Berikut adalah penjelasan lebih rinci mengenai beberapa lembaga utama di desa:</p>
-                            <img src="https://via.placeholder.com/600x400?text=Lembaga+Desa" alt="Lembaga Desa" />
-                        </section>
                         <section className="intro" data-aos="fade-up">
                             <h1>Kenali Lembaga-lembaga di Desa</h1>
                             <p>Temukan berbagai lembaga penting yang ada di desa kami, termasuk fasilitas pelayanan publik, pendidikan, dan kegiatan komunitas.</p>
                         </section>
 
-                        {staticInstitutions.map(institution => (
-                            <div key={institution.id} className={`item-container ${institution.layout}`} data-aos="fade-up">
-                                <img src={institution.image} alt={institution.name} />
+                        {lembaga.map(institution => (
+                            <div key={institution.id} className="item-container" data-aos="fade-up">
+                                <img src={`http://localhost:3000${institution.image}`} alt={institution.name} />
                                 <div className="item-details">
                                     <h3>{institution.name}</h3>
                                     <p>{institution.description}</p>
@@ -180,4 +128,20 @@ export default function Lembaga() {
             <BackToTop />
         </>
     );
+}
+
+export async function getServerSideProps({ res }) {
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=10, stale-while-revalidate=59'
+    );
+    const response = await fetch(`http://localhost:3000/lembagas`);
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+
+    return {
+        props: { lembaga: data.data },
+    };
 }

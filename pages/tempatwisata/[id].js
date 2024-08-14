@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import NavBarTop from '../../components/NavBarTop';
 import Footer from '../../components/Footer';
@@ -6,32 +5,29 @@ import Breadcrumb from '../../components/Breadcrumb';
 import PlaceCard from '../../components/PlaceCard';
 import BackToTop from '../../components/BackToTop';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const title = "Detail Tempat Wisata";
-
-// Static data for demonstration
-const staticPlaces = [
-    { id: 1, title: "Pantai Kuta", description: "Pantai Kuta adalah salah satu pantai terkenal di Bali dengan pasir putih dan ombak yang cocok untuk berselancar.", excerpt: "Pantai Kuta, Bali", images: ["https://via.placeholder.com/600x400?text=Pantai+Kuta+1", "https://via.placeholder.com/600x400?text=Pantai+Kuta+2", "https://via.placeholder.com/600x400?text=Pantai+Kuta+3"] },
-    { id: 2, title: "Gunung Bromo", description: "Gunung Bromo adalah gunung berapi aktif di Jawa Timur yang menawarkan pemandangan matahari terbit yang menakjubkan.", excerpt: "Gunung Bromo, Jawa Timur", images: ["https://via.placeholder.com/600x400?text=Gunung+Bromo+1", "https://via.placeholder.com/600x400?text=Gunung+Bromo+2", "https://via.placeholder.com/600x400?text=Gunung+Bromo+3"] },
-    { id: 3, title: "Candi Borobudur", description: "Candi Borobudur adalah candi Buddha terbesar di dunia yang terletak di Jawa Tengah, Indonesia.", excerpt: "Candi Borobudur, Jawa Tengah", images: ["https://via.placeholder.com/600x400?text=Candi+Borobudur+1", "https://via.placeholder.com/600x400?text=Candi+Borobudur+2", "https://via.placeholder.com/600x400?text=Candi+Borobudur+3"] },
-    // Add more items here
-];
-
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 2;
 
 export async function getServerSideProps(context) {
     const { id } = context.params;
 
-    // Fetch selected place details
-    const place = staticPlaces.find(p => p.id === parseInt(id));
+    // Fetch place details
+    const res = await fetch(`http://localhost:3000/wisata/${id}`);
+    const place = await res.json();
 
     // Fetch latest places
-    const latestPlaces = staticPlaces.slice(-ITEMS_PER_PAGE);
-
+    const latestRes = await fetch('http://localhost:3000/wisata');
+    const latestData = await latestRes.json();
+    const latestPlaces = latestData.data.slice(-ITEMS_PER_PAGE);
+    
     return {
         props: {
-            place,
-            latestPlaces
+            place: place || null,
+            latestPlaces: latestPlaces || null,
         },
     };
 }
@@ -40,12 +36,15 @@ export default function PlaceDetail({ place, latestPlaces }) {
     const [currentImage, setCurrentImage] = useState(0);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentImage((prev) => (prev + 1) % place.images.length);
-        }, 3000);
+        AOS.init(); // Initialize AOS
+        if (place && place.foto.length > 0) {
+            const interval = setInterval(() => {
+                setCurrentImage((prev) => (prev + 1) % place.foto.length);
+            }, 3000);
 
-        return () => clearInterval(interval);
-    }, [place.images.length]);
+            return () => clearInterval(interval);
+        }
+    }, [place]);
 
     if (!place) {
         return <div>Place not found</div>;
@@ -62,7 +61,7 @@ export default function PlaceDetail({ place, latestPlaces }) {
                 @media(min-width: 768px) {
                     .main-section {
                         flex-direction: row;
-                        gap: 40px; /* Increased gap for larger screens */
+                        gap: 40px;
                     }
                 }
                 .details {
@@ -90,7 +89,7 @@ export default function PlaceDetail({ place, latestPlaces }) {
                     width: 100%;
                     height: 400px;
                 }
-                .image-gallery img {
+                .image-gallery .image {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
@@ -101,7 +100,7 @@ export default function PlaceDetail({ place, latestPlaces }) {
                     transition: opacity 1s ease-in-out;
                     z-index: 1;
                 }
-                .image-gallery img.active {
+                .image-gallery .image.active {
                     opacity: 1;
                     z-index: 2;
                 }
@@ -129,7 +128,7 @@ export default function PlaceDetail({ place, latestPlaces }) {
                 <meta property="og:url" content={process.env.NEXT_PUBLIC_API_URL} />
                 <meta property="og:title" content={place.title} />
                 <meta property="og:description" content={place.description} />
-                <meta property="og:image" content={place.images[0]} />
+                <meta property="og:image" content={place.foto[0]} />
             </Head>
 
             <NavBarTop />
@@ -140,31 +139,32 @@ export default function PlaceDetail({ place, latestPlaces }) {
                 </div>
 
                 <div className="container my-5 main-section">
-                    <div className="details">
+                    <div className="details" data-aos="fade-up">
                         <h1>{place.title}</h1>
                         <div className="image-gallery">
-                            {place.images.map((img, index) => (
-                                <img
+                            {place.foto.map((img, index) => (
+                                <Image
                                     key={index}
-                                    src={img}
+                                    src={`http://localhost:3000${img}`}
                                     alt={place.title}
-                                    className={currentImage === index ? 'active' : ''}
+                                    className={`image ${currentImage === index ? 'active' : ''}`}
+                                    layout="fill"
+                                    objectFit="cover"
                                 />
                             ))}
                         </div>
-
-                        <p>{place.description}</p>
+                        <div className="text-muted lead mt-4" dangerouslySetInnerHTML={{ __html: place.body }} data-aos="fade-up"></div>
                     </div>
-                    <div className="sidebar">
+                    <div className="sidebar" data-aos="fade-right">
                         <h2>Latest Places</h2>
                         <div className="latest-places">
                             {latestPlaces.map(latest => (
-                                <div className="place-card" key={latest.id}>
+                                <div className="place-card" key={latest.id} data-aos="fade-up">
                                     <PlaceCard
                                         id={latest.id}
                                         title={latest.title}
-                                        excerpt={latest.excerpt}
-                                        images={latest.images}
+                                        excerpt={`${latest.body.slice(0, 50)}<a href="/tempatwisata/${latest.id}">....Baca Selengkapnya</a>`}
+                                        images={latest.foto}
                                     />
                                 </div>
                             ))}

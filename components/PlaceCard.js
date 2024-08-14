@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function PlaceCard({ id, title, excerpt, images }) {
     const [currentImage, setCurrentImage] = useState(0);
@@ -8,12 +10,17 @@ export default function PlaceCard({ id, title, excerpt, images }) {
         setCurrentImage(index);
     };
 
+    useEffect(() => {
+        AOS.init(); // Initialize AOS
+    }, []);
+
     return (
-        <div className="place-card">
+        <div className="place-card" data-aos="fade-up">
             <div className="image-container">
                 <Link href={`/tempatwisata/${id}`} passHref>
                     <a>
-                        <img src={images[currentImage]} alt={title} />
+                        <img src={`http://localhost:3000${images[currentImage]}`} alt={title} />
+                        {console.log(`http://localhost:3000${images[currentImage]}`)}
                     </a>
                 </Link>
                 {images.length > 1 && (
@@ -30,7 +37,7 @@ export default function PlaceCard({ id, title, excerpt, images }) {
             </div>
             <div className="info">
                 <h3>{title}</h3>
-                <p>{excerpt}</p>
+                <div dangerouslySetInnerHTML={{ __html: excerpt }}></div>
             </div>
             <style jsx>{`
                 .place-card {

@@ -4,7 +4,8 @@ module.exports = {
     domains: [
       'images.unsplash.com',
       'cdn.pixabay.com',
-      'localhost'
+      'localhost',
+      'nuniali-51afdf69a4d2.herokuapp.com'
     ],
   },
 }

@@ -14,12 +14,7 @@ import { FacebookIcon, TwitterIcon, WhatsappIcon, TelegramIcon, FacebookShareBut
 
 export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
     const router = useRouter()
-    let [namaDesa, setNamaDesa] = useState("Nuniali");
 
-    useEffect(() => {
-        namaDesa = localStorage.getItem("namaDesa");
-        setNamaDesa(namaDesa);
-    });
     // Get 3 post
     const someRandomPosts = randomPosts.slice(0, 3);
     // Get 3 agenda
@@ -93,14 +88,14 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
             </style>
 
             <Head>
-                <title>{`${agenda.title} - Desa ${namaDesa}`}</title>
-                <meta name="description" content={`Website Desa ${namaDesa}`} />
+                <title>{`${agenda.title} - Desa Nuniali`}</title>
+                <meta name="description" content={`Website Desa Nuniali`} />
                 <link rel="icon" href="/favicon.ico" />
                 {/* <!-- Open Graph / Facebook --> */}
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content={process.env.NEXT_PUBLIC_API_URL} />
-                <meta property="og:title" content={`Situs Resmi Desa ${namaDesa}`} />
-                <meta property="og:description" content={`Website Resmi Desa ${namaDesa}. Media komunikasi dan transparansi Pemerintah Desa`} />
+                <meta property="og:title" content={`Situs Resmi Desa Nuniali`} />
+                <meta property="og:description" content={`Website Resmi Desa Nuniali. Media komunikasi dan transparansi Pemerintah Desa`} />
                 <meta property="og:image" content={`${process.env.NEXT_PUBLIC_API_URL}/metalogo.jpg`}></meta>
             </Head>
 
@@ -114,7 +109,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
                             <div className="card bg-card-primary shadow-blog border-0">
                                 <Image
                                     alt="Image"
-                                    src={`https://nuniali-51afdf69a4d2.herokuapp.com${agenda.image}`}
+                                    src={`http://localhost:3000${agenda.image}`}
                                     width="450"
                                     height="400"
                                     quality={90}
@@ -147,7 +142,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
                                     <div key={item.id}>
                                         <PostList
                                             id={item.id}
-                                            image={`https://nuniali-51afdf69a4d2.herokuapp.com${item.image}`}
+                                            image={`http://localhost:3000${item.image}`}
                                             title={item.title}
                                             slug={item.slug}
                                             date={item.date}
@@ -162,7 +157,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
                                     <div key={item.id}>
                                         <AgendaList
                                             id={item.id}
-                                            image={`https://nuniali-51afdf69a4d2.herokuapp.com${item.image}`}
+                                            image={`http://localhost:3000${item.image}`}
                                             title={item.title}
                                             slug={item.slug}
                                             date={item.date}
@@ -190,9 +185,9 @@ export async function getServerSideProps({ params, res }) {
     );
 
     const [responseRandomAgenda, responseRandomPost, responseSingleAgenda] = await Promise.all([
-        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/agendas`),
-        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/beritas`),
-        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/agendas/${params.id}`)
+        fetch(`http://localhost:3000/agendas`),
+        fetch(`http://localhost:3000/beritas`),
+        fetch(`http://localhost:3000/agendas/${params.id}`)
     ]);
 
 

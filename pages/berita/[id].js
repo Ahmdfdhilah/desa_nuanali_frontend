@@ -113,7 +113,7 @@ export default function BlogDetail({ post, randomPosts, randomAgendas }) {
                             <div className="card bg-card-primary shadow-blog border-0">
                                 <Image
                                     alt="Image"
-                                    src={`https://nuniali-51afdf69a4d2.herokuapp.com${post.image}`}
+                                    src={`http://localhost:3000${post.image}`}
                                     width="450"
                                     height="400"
                                     quality={90}
@@ -150,7 +150,7 @@ export default function BlogDetail({ post, randomPosts, randomAgendas }) {
                                     <div key={item.id}>
                                         <PostList
                                             id={item.id}
-                                            image={`https://nuniali-51afdf69a4d2.herokuapp.com${item.image}`}
+                                            image={`http://localhost:3000${item.image}`}
                                             title={item.title}
                                             slug={item.slug}
                                             date={item.date}
@@ -165,7 +165,7 @@ export default function BlogDetail({ post, randomPosts, randomAgendas }) {
                                     <div key={item.id}>
                                         <AgendaList
                                             id={item.id}
-                                            image={`https://nuniali-51afdf69a4d2.herokuapp.com${item.image}`}
+                                            image={`http://localhost:3000${item.image}`}
                                             title={item.title}
                                             slug={item.slug}
                                             date={item.date}
@@ -193,9 +193,9 @@ export async function getServerSideProps({ params, res }) {
         'public, s-maxage=10, stale-while-revalidate=59'
     )
     const [responseRandomAgenda, responseRandomPost, responseSinglePost] = await Promise.all([
-        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/agendas`),
-        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/beritas`),
-        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/beritas/${params.id}`)
+        fetch(`http://localhost:3000/agendas`),
+        fetch(`http://localhost:3000/beritas`),
+        fetch(`http://localhost:3000/beritas/${params.id}`)
     ]);
 
 

@@ -7,20 +7,24 @@ import BackToTop from '../components/BackToTop';
 import AchievementCard from '../components/AchievementCard';
 
 const title = "Prestasi";
-
-const staticAchievements = [
-    { id: 1, title: "Penghargaan Inovasi", description: "Penghargaan ini diberikan untuk inovasi luar biasa di bidang teknologi.", images: ["https://via.placeholder.com/600x400?text=Penghargaan+Inovasi+1", "https://via.placeholder.com/600x400?text=Penghargaan+Inovasi+2"] },
-    { id: 2, title: "Kemenangan Kompetisi", description: "Kemenangan dalam kompetisi nasional di bidang sains.", images: ["https://via.placeholder.com/600x400?text=Kemenangan+Kompetisi+1", "https://via.placeholder.com/600x400?text=Kemenangan+Kompetisi+2"] },
-    { id: 3, title: "Sertifikat Keberhasilan", description: "Sertifikat yang diakui untuk keberhasilan akademis.", images: ["https://via.placeholder.com/600x400?text=Sertifikat+Keberhasilan+1", "https://via.placeholder.com/600x400?text=Sertifikat+Keberhasilan+2"] },
-];
-
 const ITEMS_PER_PAGE = 5;
 
-export default function Prestasi() {
+export async function getServerSideProps() {
+    const res = await fetch('http://localhost:3000/prestasi');
+    const data = await res.json();
+
+    return {
+        props: {
+            achievements: data.data,
+            total: data.total
+        }
+    };
+}
+
+export default function Prestasi({ achievements, total }) {
     const [currentPage, setCurrentPage] = useState(1);
 
-    const totalItems = staticAchievements.length;
-    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
 
     const handlePageChange = (page) => {
         if (page >= 1 && page <= totalPages) {
@@ -29,7 +33,7 @@ export default function Prestasi() {
     };
 
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const currentAchievements = staticAchievements.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    const currentAchievements = achievements.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
     return (
         <>
@@ -125,8 +129,8 @@ export default function Prestasi() {
                                     key={achievement.id}
                                     id={achievement.id}
                                     title={achievement.title}
-                                    excerpt={achievement.description}
-                                    images={achievement.images}
+                                    excerpt={achievement.description || "No description available"}
+                                    images={[achievement.foto]} // Assuming 'foto' is a single image URL
                                 />
                             ))}
                         </div>

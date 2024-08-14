@@ -5,11 +5,21 @@ import Footer from "../components/Footer";
 import BreadcrumbArea from "../components/BreadcrumbArea";
 import Image from "next/image";
 import BackToTop from "../components/BackToTop";
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import AOS styles
 
 const title = "Struktur";
 
 export default function Struktur({ struktur }) {
     const [namaDesa, setNamaDesa] = useState("Nuniali");
+
+    useEffect(() => {
+        AOS.init({
+            duration: 1000, // Duration of animation
+            easing: 'ease-in-out', // Easing function
+            once: true // Animation will happen only once
+        });
+    }, []);
 
     const sortedStruktur = struktur.sort((a, b) => {
         const order = {
@@ -23,11 +33,6 @@ export default function Struktur({ struktur }) {
 
     return (
         <>
-            <style jsx>
-                {`
-            `}
-            </style>
-
             <Head>
                 <title>{title}</title>
                 <meta name="description" content={`Website Desa ${namaDesa}`} />
@@ -46,10 +51,17 @@ export default function Struktur({ struktur }) {
 
                 <div className="container my-5">
                     {sortedStruktur.map((item, index) => (
-                        <div className="row g-4 my-2" key={index}>
+                        <div className="row g-4 my-2" key={index} data-aos="fade-up">
                             <div className="col-sm-3">
                                 <div className="card bg-card-primary shadow-sm rounded border-0 px-3 py-3">
-                                    <Image alt={`Foto ${item.jabatan}`} src={`https://nuniali-51afdf69a4d2.herokuapp.com${item.foto}`} width={200} height={200} quality={90} className="img-fluid mx-auto rounded" />
+                                    <Image
+                                        alt={`Foto ${item.jabatan}`}
+                                        src={`http://localhost:3000${item.foto}`}
+                                        width={200}
+                                        height={200}
+                                        quality={90}
+                                        className="img-fluid mx-auto rounded"
+                                    />
                                 </div>
                             </div>
                             <div className="col-sm-9">
@@ -89,7 +101,7 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     );
-    const response = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/strukturs`);
+    const response = await fetch(`http://localhost:3000/strukturs`);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }

@@ -1,8 +1,14 @@
-import Image from "next/image"
-import Link from "next/link"
-import { FaRegCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
+import Image from "next/image";
+import Link from "next/link";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { useEffect } from "react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function AgendaCard({ id, slug, image, title, location, date, time }) {
+    useEffect(() => {
+        AOS.init(); // Initialize AOS
+    }, []);
 
     return (
         <>
@@ -26,7 +32,7 @@ export default function AgendaCard({ id, slug, image, title, location, date, tim
                 }
             `}</style>
 
-            <article className="card bg-card-primary h-100 card-link shadow-card agenda border-0">
+            <article className="card bg-card-primary h-100 card-link shadow-card agenda border-0" data-aos="fade-up">
                 <div className="row g-0">
                     <div className="col-sm-4 d-flex align-items-center">
                         <Image
