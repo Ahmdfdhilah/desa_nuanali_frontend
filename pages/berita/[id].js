@@ -18,13 +18,19 @@ export default function BlogDetail({ post, randomPosts, randomAgendas }) {
     let [namaDesa, setNamaDesa] = useState("Nuniali");
 
     useEffect(() => {
-        namaDesa = localStorage.getItem("namaDesa");
-        setNamaDesa(namaDesa);
-    });
+        const storedNamaDesa = localStorage.getItem("namaDesa");
+        setNamaDesa(storedNamaDesa || "Nuniali");
+    }, []);
+
+    // Filter out agendas related to the current post
+    const filteredAgendas = randomAgendas.filter(agenda => agenda.id !== post.id);
+
+    const filteredPost = randomPosts.filter(posts => posts.id !== post.id);
+
     // Get 3 post
-    const someRandomPosts = randomPosts.slice(0, 3);
-    // Get 3 agenda
-    const someRandomAgendas = randomAgendas.slice(0, 2);
+    const someRandomPosts = filteredPost.slice(0, 3);
+    // Get 2 filtered agendas
+    const someFilteredAgendas = filteredAgendas.slice(0, 2);
 
     const popover = (
         <Popover id="popover-basic" className="bg-card-primary border-color-primary">
@@ -113,7 +119,7 @@ export default function BlogDetail({ post, randomPosts, randomAgendas }) {
                             <div className="card bg-card-primary shadow-blog border-0">
                                 <Image
                                     alt="Image"
-                                    src={`http://localhost:3000${post.image}`}
+                                    src={`https://nuniali-51afdf69a4d2.herokuapp.com${post.image}`}
                                     width="450"
                                     height="400"
                                     quality={90}
@@ -131,7 +137,7 @@ export default function BlogDetail({ post, randomPosts, randomAgendas }) {
                                             {post.date}
                                         </div>
                                     </div>
-                                    <div className="card-text mt-2 text-color-secondary" dangerouslySetInnerHTML={{ __html: post.body }} />
+                                    <div className="fw-bold mt-4" dangerouslySetInnerHTML={{ __html: post.body }} />
                                     <div className="d-flex justify-content-end mt-4 mb-2">
                                         <OverlayTrigger trigger="click" placement="left" overlay={popover}>
                                             <button className="btn btn-outline-primary btn-sm"><FaShareAlt className="me-2" />Bagikan</button>
@@ -150,9 +156,8 @@ export default function BlogDetail({ post, randomPosts, randomAgendas }) {
                                     <div key={item.id}>
                                         <PostList
                                             id={item.id}
-                                            image={`http://localhost:3000${item.image}`}
+                                            image={`https://nuniali-51afdf69a4d2.herokuapp.com${item.image}`}
                                             title={item.title}
-                                            slug={item.slug}
                                             date={item.date}
                                         />
                                     </div>
@@ -161,11 +166,11 @@ export default function BlogDetail({ post, randomPosts, randomAgendas }) {
 
                             <div className="card bg-card-primary shadow-blog border-0 px-3 py-2 mt-4">
                                 <h5 className="mb-3 text-color-primary">Latest Agenda</h5>
-                                {someRandomAgendas.map(item =>
+                                {someFilteredAgendas.map(item =>
                                     <div key={item.id}>
                                         <AgendaList
                                             id={item.id}
-                                            image={`http://localhost:3000${item.image}`}
+                                            image={`https://nuniali-51afdf69a4d2.herokuapp.com${item.image}`}
                                             title={item.title}
                                             slug={item.slug}
                                             date={item.date}
@@ -193,9 +198,9 @@ export async function getServerSideProps({ params, res }) {
         'public, s-maxage=10, stale-while-revalidate=59'
     )
     const [responseRandomAgenda, responseRandomPost, responseSinglePost] = await Promise.all([
-        fetch(`http://localhost:3000/agendas`),
-        fetch(`http://localhost:3000/beritas`),
-        fetch(`http://localhost:3000/beritas/${params.id}`)
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/agendas`),
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/beritas`),
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/beritas/${params.id}`)
     ]);
 
 
@@ -212,5 +217,4 @@ export async function getServerSideProps({ params, res }) {
             randomAgendas: datasRandomAgenda.data
         }
     };
-
 };

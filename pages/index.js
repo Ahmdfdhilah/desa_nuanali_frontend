@@ -29,7 +29,6 @@ SwiperCore.use([Autoplay, Pagination]);
 
 // Dynamically import Gallery component
 const Gallery = dynamic(() => import('react-photo-gallery'), { ssr: false });
-const Carousel = dynamic(() => import('react-images'), { ssr: false });
 
 export default function Home({ posts, agendas, videos, photos }) {
     useEffect(() => {
@@ -190,7 +189,7 @@ export default function Home({ posts, agendas, videos, photos }) {
                                     <AgendaCard
                                         id={agenda.id}
                                         slug={agenda.slug}
-                                        image={`http://localhost:3000${agenda.image}`}
+                                        image={`https://nuniali-51afdf69a4d2.herokuapp.com${agenda.image}`}
                                         title={agenda.title}
                                         location={agenda.location}
                                         date={agenda.date}
@@ -251,10 +250,10 @@ export default function Home({ posts, agendas, videos, photos }) {
                                     <PostCard
                                         id={post.id}
                                         slug={post.slug}
-                                        image={`http://localhost:3000${post.image}`}
+                                        image={`https://nuniali-51afdf69a4d2.herokuapp.com${post.image}`}
                                         title={post.title}
                                         date={post.createdAt}
-                                        excerpt={post.excerpt} />
+                                         />
                                 </SwiperSlide>
                             )}
                         </Swiper>
@@ -313,10 +312,10 @@ export default function Home({ posts, agendas, videos, photos }) {
 
 export async function getServerSideProps() {
     const [postsRes, agendasRes, videosRes, photosRes] = await Promise.all([
-        fetch(`http://localhost:3000/beritas`),
-        fetch(`http://localhost:3000/agendas`),
-        fetch(`http://localhost:3000/videos`),
-        fetch(`http://localhost:3000/photos`)
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/beritas`),
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/agendas`),
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/videos`),
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/photos`)
     ]);
 
     const [posts, agendas, videos, photos] = await Promise.all([
@@ -327,17 +326,16 @@ export async function getServerSideProps() {
     ]);
 
     const photosData = photos.data.map(photo => ({
-        src: `http://localhost:3000${photo.src}`,
+        src: `https://nuniali-51afdf69a4d2.herokuapp.com${photo.src}`,
         width: 4, // Adjust width as needed
         height: 3, // Adjust height as needed
-        title: photo.title
     }));
 
     return {
         props: {
             posts:posts.data,
             agendas:agendas.data,
-            videos,
+            videos:videos.data,
             photos:photosData
         }
     };

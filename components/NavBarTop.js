@@ -5,14 +5,14 @@ import ActiveLink from './ActiveLink'
 import React, { useState, useEffect } from "react";
 import { FaPhoneAlt, FaRegEnvelope, FaFacebook, FaInstagram, FaTwitter, FaYoutube, FaBars } from "react-icons/fa";
 import dynamic from "next/dynamic";
-const ThemeToggle = dynamic(() => import("../components/ThemeToggle"), {
-    ssr: false,
-});
+// const ThemeToggle = dynamic(() => import("../components/ThemeToggle"), {
+//     ssr: false,
+// });
 
 export default function NavBarTop() {
 
     const [isFixedNavbar, setFixedNavbar] = useState("false");
-
+ 
     useEffect(() => {
         setFixedNavbar(false);
         window.addEventListener("scroll", () => {
@@ -100,7 +100,7 @@ export default function NavBarTop() {
                     </div>
                 </div>
             </div>
-            <nav className={`navbar navbar-expand-xl navbar-light bg-color-primary border-bottom-primary shadow-sm ${isFixedNavbar ? "fixed-top" : ""}`}>
+            <nav className={`navbar navbar-expand-xl navbar-light bg-color-secondary border-bottom-primary shadow-sm ${isFixedNavbar ? "" : ""}`}>
                 <div className="container">
                     <Link href="/">
                         <a className="navbar-brand d-flex align-items-center">
@@ -118,7 +118,11 @@ export default function NavBarTop() {
                         </a>
                     </Link>
 
-                    <div className="nav-link ms-auto order-0 order-xl-1" aria-current="page"><ThemeToggle /></div>
+                    <div className="nav-link ms-auto order-0 order-xl-1" aria-current="page">
+                        <button className="btn btn-success">
+                            <a href='https://cms-nuniali.vercel.app/login' className="text-color-primary">Login</a>
+                        </button>
+                    </div>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                         <i className="icon-toggle"><FaBars /></i>
                     </button>
@@ -136,7 +140,7 @@ export default function NavBarTop() {
                                 <a className="nav-link dropdown-toggle text-color-tertiary" href="#" id="profilDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Profil
                                 </a>
-                                <ul className="dropdown-menu bg-color-primary" aria-labelledby="profilDropdown">
+                                <ul className="dropdown-menu bg-white" aria-labelledby="profilDropdown">
                                     <li className="me-2">
                                         <ActiveLink activeClassName="active" href="/sejarah">
                                             <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Sejarah</a>
@@ -144,7 +148,7 @@ export default function NavBarTop() {
                                     </li>
                                     <li className="me-2">
                                         <ActiveLink activeClassName="active" href="/visimisi">
-                                            <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Visi Misi</a>
+                                            <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2 ">Visi Misi</a>
                                         </ActiveLink>
                                     </li>
                                     <li className="me-2">
@@ -163,7 +167,7 @@ export default function NavBarTop() {
                                 <a className="nav-link dropdown-toggle text-color-tertiary" href="#" id="informasiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Informasi
                                 </a>
-                                <ul className="dropdown-menu bg-color-primary" aria-labelledby="informasiDropdown">
+                                <ul className="dropdown-menu bg-white" aria-labelledby="informasiDropdown">
                                     <li className="me-2">
                                         <ActiveLink activeClassName="active" href="/berita">
                                             <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Berita</a>
@@ -180,7 +184,7 @@ export default function NavBarTop() {
                                 <a className="nav-link dropdown-toggle text-color-tertiary" href="#" id="informasiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Desa
                                 </a>
-                                <ul className="dropdown-menu bg-color-primary" aria-labelledby="informasiDropdown">
+                                <ul className="dropdown-menu bg-white" aria-labelledby="informasiDropdown">
                                     {/* <li className="me-2">
                                         <ActiveLink activeClassName="active" href="/sekolah">
                                             <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Sekolah</a>
@@ -212,7 +216,7 @@ export default function NavBarTop() {
                                 <a className="nav-link dropdown-toggle text-color-tertiary" href="#" id="chartDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Demografis
                                 </a>
-                                <ul className="dropdown-menu bg-color-primary" aria-labelledby="chartDropdown">
+                                <ul className="dropdown-menu bg-white" aria-labelledby="chartDropdown">
                                     <li className="me-2">
                                         <ActiveLink activeClassName="active" href="/penduduk">
                                             <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Penduduk</a>
@@ -229,7 +233,7 @@ export default function NavBarTop() {
                                 <a className="nav-link dropdown-toggle text-color-tertiary" href="#" id="galeriDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Media
                                 </a>
-                                <ul className="dropdown-menu bg-color-primary" aria-labelledby="galeriDropdown">
+                                <ul className="dropdown-menu bg-white" aria-labelledby="galeriDropdown">
                                     <li className="me-2">
                                         <ActiveLink activeClassName="active" href="/foto">
                                             <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Galeri Foto</a>
@@ -246,7 +250,7 @@ export default function NavBarTop() {
                                 <a className="nav-link dropdown-toggle text-color-tertiary" href="#" id="publikasiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Publikasi
                                 </a>
-                                <ul className="dropdown-menu bg-color-primary" aria-labelledby="publikasiDropdown">
+                                <ul className="dropdown-menu bg-white" aria-labelledby="publikasiDropdown">
                                     <li className="me-2">
                                         <ActiveLink activeClassName="active" href="/pembangunan">
                                             <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Pembangunan Desa</a>

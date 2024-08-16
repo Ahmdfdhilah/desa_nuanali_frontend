@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import NavBarTop from '../components/NavBarTop';
@@ -6,12 +6,21 @@ import Footer from '../components/Footer';
 import Breadcrumb from '../components/Breadcrumb';
 import BackToTop from '../components/BackToTop';
 import Carousel, { Modal, ModalGateway } from 'react-images';
+import axios from 'axios';
 
 const title = "Bagan Pemerintahan";
 
 export default function BaganPemerintahan() {
     const [currentImage, setCurrentImage] = useState(0);
     const [viewerIsOpen, setViewerIsOpen] = useState(false);
+    const [diagramImage, setDiagramImage] = useState({
+        src: '',
+        width: 1200,
+        height: 800,
+        title: 'Bagan Struktur Pemerintahan',
+    });
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const openLightbox = useCallback((index) => {
         setCurrentImage(index);
@@ -23,12 +32,28 @@ export default function BaganPemerintahan() {
         setViewerIsOpen(false);
     };
 
-    const diagramImage = {
-        src: "/bagan.png", // Update with your image path
-        width: 1200, // Adjust width as needed
-        height: 800, // Adjust height as needed
-        title: "Bagan Struktur Pemerintahan"
-    };
+    useEffect(() => {
+        const fetchDiagramImage = async () => {
+            try {
+                const response = await axios.get('https://nuniali-51afdf69a4d2.herokuapp.com/bagan'); // Update the URL as needed
+                if (response.data && response.data.img) {
+                    setDiagramImage({
+                        src: `https://nuniali-51afdf69a4d2.herokuapp.com${response.data.img}`, // Update this path as needed
+                        width: 1200,
+                        height: 800,
+                        title: 'Bagan Struktur Pemerintahan',
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching diagram image:', error);
+                setError('Failed to load image.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchDiagramImage();
+    }, []);
 
     return (
         <>
@@ -57,14 +82,20 @@ export default function BaganPemerintahan() {
                     </section>
 
                     <div className="diagram-container" data-aos="fade-up" onClick={() => openLightbox(0)}>
-                        <Image 
-                            src={diagramImage.src}
-                            alt={diagramImage.title}
-                            width={1200}
-                            height={800}
-                            layout="responsive"
-                            style={{ cursor: 'pointer' }}
-                        />
+                        {loading ? (
+                            <p>Loading...</p>
+                        ) : error ? (
+                            <p>{error}</p>
+                        ) : (
+                            <Image 
+                                src={diagramImage.src}
+                                alt={diagramImage.title}
+                                width={diagramImage.width}
+                                height={diagramImage.height}
+                                layout="responsive"
+                                style={{ cursor: 'pointer' }}
+                            />
+                        )}
                     </div>
 
                     <ModalGateway>

@@ -131,9 +131,9 @@ export default function Penduduk({ gender, education, religion, sekolah, pekerja
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {gender.map(item =>
+                                        {gender.map((item, index) =>
                                             <tr key={item.id}>
-                                                <td>{item.id}</td>
+                                                <td>{++index}</td>
                                                 <td>{item.name}</td>
                                                 <td>{item.total}</td>
                                             </tr>
@@ -215,9 +215,9 @@ export default function Penduduk({ gender, education, religion, sekolah, pekerja
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {education.map(item =>
+                                        {education.map((item, index) =>
                                             <tr key={item.id}>
-                                                <td>{item.id}</td>
+                                                <td>{++index}</td>
                                                 <td>{item.name}</td>
                                                 <td>{item.total}</td>
                                             </tr>
@@ -346,9 +346,9 @@ export default function Penduduk({ gender, education, religion, sekolah, pekerja
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {usia.map(item =>
+                                        {usia.map((item, index) =>
                                             <tr key={item.id}>
-                                                <td>{item.id}</td>
+                                                <td>{++index}</td>
                                                 <td>{item.name}</td>
                                                 <td>{item.total}</td>
                                             </tr>
@@ -389,9 +389,9 @@ export default function Penduduk({ gender, education, religion, sekolah, pekerja
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {status.map(item =>
+                                        {status.map((item, index) =>
                                             <tr key={item.id}>
-                                                <td>{item.id}</td>
+                                                <td>{++index}</td>
                                                 <td>{item.name}</td>
                                                 <td>{item.total}</td>
                                             </tr>
@@ -423,20 +423,22 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     )
-    const getDataGender = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/gender`);
+    const getDataGender = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/genders`);
     const gender = await getDataGender.json();
-    const getDataEducation = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/education`);
+    const getDataEducation = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/educations`);
     const education = await getDataEducation.json();
-    const getDataReligion = await fetch('http://localhost:3000/religions');
+    const getDataReligion = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/religions');
     const religion = await getDataReligion.json();
-    const getDataSekolah = await fetch(`http://localhost:3000/sekolah`);
+    const getDataSekolah = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/sekolah`);
     const sekolah = await getDataSekolah.json();
-    const getDataPekerjaan = await fetch(`http://localhost:3000/pekerjaans`);
+    const getDataPekerjaan = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/pekerjaans`);
     const pekerjaan = await getDataPekerjaan.json();
-    const getDataStatus = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/status`);
+    const getDataStatus = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/statuses`);
     const status = await getDataStatus.json();
-    const getDataUsia = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/usia`);
+    const getDataUsia = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/usias`);
     const usia = await getDataUsia.json();
+    const props = { gender, education, religion, sekolah, pekerjaan, status, usia }
+    console.log(props);
     return {
         props: { gender, education, religion, sekolah, pekerjaan: pekerjaan.data, status, usia },
     };

@@ -106,15 +106,11 @@ export default function ProductCard({ id, slug, name, price, image, phone, descr
 
             <div className="card bg-card-primary shadow-custom rounded-3">
                 <div className="card-img">
-                    <Image alt={name} src={`http://localhost:3000${image}`} width={350} height={200} quality={90} className="img-fluid rounded-top" />
+                    <Image alt={name} src={`https://nuniali-51afdf69a4d2.herokuapp.com${image}`} width={350} height={200} quality={90} className="img-fluid rounded-top" />
                 </div>
                 <div className="card-body">
                     <h6 className="card-title">{name}</h6>
                     <h5 className="card-price">Rp. {price}</h5>
-                    <p className="card-description">{`${description.slice(0, 150)}`}</p>
-                    <p className="card-info">Lokasi: {location}</p>
-                    <p className="card-info">Kontak: {contactPerson}</p>
-                    <p className="card-info">Penjual: {seller}</p>
                 </div>
                 <div className="card-footer">
                     <a href={`https://wa.me/${phone}?text=Saya%20ingin%20memesan%20${name}`} className="btn-whatsapp" rel="noreferrer" target="_blank">

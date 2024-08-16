@@ -16,14 +16,14 @@ export async function getServerSideProps(context) {
     const { id } = context.params;
 
     // Fetch place details
-    const res = await fetch(`http://localhost:3000/wisata/${id}`);
+    const res = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/wisata/${id}`);
     const place = await res.json();
 
     // Fetch latest places
-    const latestRes = await fetch('http://localhost:3000/wisata');
+    const latestRes = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/wisata');
     const latestData = await latestRes.json();
     const latestPlaces = latestData.data.slice(-ITEMS_PER_PAGE);
-    
+
     return {
         props: {
             place: place || null,
@@ -49,6 +49,9 @@ export default function PlaceDetail({ place, latestPlaces }) {
     if (!place) {
         return <div>Place not found</div>;
     }
+
+    // Filter out the current place from latestPlaces
+    const filteredLatestPlaces = latestPlaces.filter(latest => latest.id !== place.id);
 
     return (
         <>
@@ -145,7 +148,7 @@ export default function PlaceDetail({ place, latestPlaces }) {
                             {place.foto.map((img, index) => (
                                 <Image
                                     key={index}
-                                    src={`http://localhost:3000${img}`}
+                                    src={`https://nuniali-51afdf69a4d2.herokuapp.com${img}`}
                                     alt={place.title}
                                     className={`image ${currentImage === index ? 'active' : ''}`}
                                     layout="fill"
@@ -153,17 +156,17 @@ export default function PlaceDetail({ place, latestPlaces }) {
                                 />
                             ))}
                         </div>
-                        <div className="text-muted lead mt-4" dangerouslySetInnerHTML={{ __html: place.body }} data-aos="fade-up"></div>
+                        <div className="lead mt-4" dangerouslySetInnerHTML={{ __html: place.body }} data-aos="fade-up"></div>
                     </div>
                     <div className="sidebar" data-aos="fade-right">
                         <h2>Latest Places</h2>
                         <div className="latest-places">
-                            {latestPlaces.map(latest => (
+                            {filteredLatestPlaces.map(latest => (
                                 <div className="place-card" key={latest.id} data-aos="fade-up">
                                     <PlaceCard
                                         id={latest.id}
                                         title={latest.title}
-                                        excerpt={`${latest.body.slice(0, 50)}<a href="/tempatwisata/${latest.id}">....Baca Selengkapnya</a>`}
+                                        excerpt={`<a href="/tempatwisata/${latest.id}">....Baca Selengkapnya</a>`}
                                         images={latest.foto}
                                     />
                                 </div>

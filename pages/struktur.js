@@ -22,13 +22,34 @@ export default function Struktur({ struktur }) {
     }, []);
 
     const sortedStruktur = struktur.sort((a, b) => {
-        const order = {
+        // Define priority order for job titles
+        const priorityOrder = {
             "Kepala Desa": 1,
-            "Sekretaris Desa": 2,
-            "BPD": 3,
-            "Wakil Kepala Desa": 4,
+            "Ketua BPD": 2,
+            "Sekretaris Desa": 3,
+            "Sekretaris BPD": 4,
+            "Anggota BPD": 5,
+            "Kepala Seksi": 6,
+            "Kaur": 7
         };
-        return (order[a.jabatan] || 5) - (order[b.jabatan] || 5);
+
+        // Function to determine priority
+        const getPriority = (jabatan) => {
+            if (priorityOrder[jabatan]) {
+                return priorityOrder[jabatan];
+            }
+            if (jabatan.includes('Kepala Seksi')) {
+                return priorityOrder['Kepala Seksi'];
+            }
+            if (jabatan.includes('Kaur')) {
+                return priorityOrder['Kaur'];
+            }
+            return Infinity; // Default priority for other roles
+        };
+
+        const priorityA = getPriority(a.jabatan);
+        const priorityB = getPriority(b.jabatan);
+        return priorityA - priorityB;
     });
 
     return (
@@ -46,7 +67,6 @@ export default function Struktur({ struktur }) {
             </Head>
             <NavBarTop />
             <main>
-
                 <BreadcrumbArea pageName="Struktur Organisasi" currentPage="Struktur" />
 
                 <div className="container my-5">
@@ -56,11 +76,11 @@ export default function Struktur({ struktur }) {
                                 <div className="card bg-card-primary shadow-sm rounded border-0 px-3 py-3">
                                     <Image
                                         alt={`Foto ${item.jabatan}`}
-                                        src={`http://localhost:3000${item.foto}`}
-                                        width={200}
-                                        height={200}
+                                        src={`https://nuniali-51afdf69a4d2.herokuapp.com${item.foto}`}
+                                        width={300}
+                                        height={300}
                                         quality={90}
-                                        className="img-fluid mx-auto rounded"
+                                        className="img-fluid mx-auto rounded object-fit-cover"
                                     />
                                 </div>
                             </div>
@@ -68,14 +88,14 @@ export default function Struktur({ struktur }) {
                                 <div className="card bg-card-primary shadow-sm rounded border-0 px-3 py-3">
                                     <h4 className="text-color-primary">{item.name}</h4>
                                     <div className="table-responsive mt-3">
-                                        <table className="table text-color-secondary table-bordered table-bordered-primary">
+                                        <table className="table text-color-secondary">
                                             <tbody>
                                                 <tr>
-                                                    <td>Jabatan</td>
+                                                    <td>Jabatan : </td>
                                                     <td>{item.jabatan}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Alamat</td>
+                                                    <td>Alamat : </td>
                                                     <td>{item.alamat || "Desa"}</td>
                                                 </tr>
                                             </tbody>
@@ -86,11 +106,8 @@ export default function Struktur({ struktur }) {
                         </div>
                     ))}
                 </div>
-
             </main>
-
             <Footer />
-
             <BackToTop />
         </>
     );
@@ -101,7 +118,7 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     );
-    const response = await fetch(`http://localhost:3000/strukturs`);
+    const response = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/strukturs`);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }

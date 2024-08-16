@@ -100,7 +100,7 @@ export default function Pembangunan({ pembangunan }) {
                                             <SwiperSlide key={index}>
                                                 <div className="image-container">
                                                     <Image
-                                                        src={`http://localhost:3000${url}`}
+                                                        src={`https://nuniali-51afdf69a4d2.herokuapp.com${url}`}
                                                         alt={`Foto Pembangunan ${index + 1}`}
                                                         layout="fill"
                                                         className="img-fluid rounded image">
@@ -113,7 +113,7 @@ export default function Pembangunan({ pembangunan }) {
                                 <div className="col-md-7 col-lg-8">
                                     <div className="card-body">
                                         <h5 className="card-title text-color-primary">{pembangunanItem.judul}</h5>
-                                        <p className="card-text text-color-tertiary fs-15">{pembangunanItem.deskripsi}</p>
+                                        <div dangerouslySetInnerHTML={{ __html: pembangunanItem.deskripsi }}></div>
                                         <div className="d-flex text-color-secondary">
                                             <p className="fw-600 me-4">
                                                 <i className="me-2"><HiOutlineLocationMarker /></i>
@@ -157,7 +157,7 @@ export default function Pembangunan({ pembangunan }) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch('http://localhost:3000/pembangunan');
+    const res = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/pembangunan');
     const data = await res.json();
     const pembangunan = data.data || [];
     console.log(pembangunan);

@@ -114,12 +114,12 @@ export default function Berita({ posts }) {
                                     <div className="col-sm-6 col-md-6 col-lg-4" key={post.id}>
                                         <PostCard
                                             id={post.id}
-                                            image={`http://localhost:3000${post.image}`}
+                                            image={`https://nuniali-51afdf69a4d2.herokuapp.com${post.image}`}
                                             title={post.title}
                                             slug={post.slug}
                                             author={post.author}
                                             date={post.date}
-                                            excerpt={post.excerpt} />
+                                            excerpt={`${post.body.slice(0,100)}...`} />
                                     </div>
                                 ))}
                             </div>
@@ -159,7 +159,7 @@ export default function Berita({ posts }) {
 
 // Fetch all data from the API endpoint and pass it as props
 export async function getServerSideProps() {
-    const res = await fetch('http://localhost:3000/beritas');
+    const res = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/beritas');
     if (!res.ok) {
         throw new Error('Network response was not ok');
     }

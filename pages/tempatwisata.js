@@ -180,7 +180,7 @@ export default function TempatWisata({ places }) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch('http://localhost:3000/wisata');
+    const res = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/wisata');
     const datas = await res.json();
     const data = datas.data;
 
@@ -188,7 +188,7 @@ export async function getServerSideProps() {
         id: place.id,
         title: place.title,
         description: place.body,
-        excerpt: `${place.body.slice(0, 150)}<a href="/tempatwisata/${place.id}">....Baca Selengkapnya</a>`,
+        excerpt: `<a href="/tempatwisata/${place.id}">Baca Selengkapnya</a>`,
         images: place.foto || []
     }));
 

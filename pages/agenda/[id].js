@@ -12,13 +12,18 @@ import { FaUser, FaRegCalendarAlt, FaShareAlt } from "react-icons/fa";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { FacebookIcon, TwitterIcon, WhatsappIcon, TelegramIcon, FacebookShareButton, TelegramShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
 
-export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
-    const router = useRouter()
+export default function AgendaDetail({ agenda, randomPosts, randomAgendas }) {
+    const router = useRouter();
 
     // Get 3 post
     const someRandomPosts = randomPosts.slice(0, 3);
-    // Get 3 agenda
-    const someRandomAgendas = randomAgendas.slice(0, 2);
+
+    // Filter out agendas related to the current post
+    const filteredAgendas = randomAgendas.filter(agendas => agendas.id !== agenda.id);
+
+    // Get 2 filtered agendas
+    const someRandomAgendas = filteredAgendas.slice(0, 2);
+
 
     const popover = (
         <Popover id="popover-basic" className="bg-card-primary border-color-primary">
@@ -57,6 +62,11 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
             </Popover.Body>
         </Popover>
     );
+
+    useEffect(() => {
+        // Debugging: Ensure agenda.body matches on client side
+        console.log("Client HTML:", agenda.body);
+    }, [agenda.body]);
 
     return (
         <>
@@ -109,7 +119,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
                             <div className="card bg-card-primary shadow-blog border-0">
                                 <Image
                                     alt="Image"
-                                    src={`http://localhost:3000${agenda.image}`}
+                                    src={`https://nuniali-51afdf69a4d2.herokuapp.com${agenda.image}`}
                                     width="450"
                                     height="400"
                                     quality={90}
@@ -123,7 +133,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
                                             <small className="text-muted ms-2">{agenda.date}</small>
                                         </div>
                                     </div>
-                                    <p className="card-text mt-2 text-color-secondary" dangerouslySetInnerHTML={{ __html: agenda.body }}></p>
+                                    <div className="mt-2 fw-bold" dangerouslySetInnerHTML={{ __html: agenda.body }}></div>
                                     <div className="d-flex justify-content-end mt-4 mb-2">
                                         <OverlayTrigger trigger="click" placement="left" overlay={popover}>
                                             <button className="btn btn-outline-primary btn-sm"><FaShareAlt className="me-2" />Bagikan</button>
@@ -142,7 +152,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
                                     <div key={item.id}>
                                         <PostList
                                             id={item.id}
-                                            image={`http://localhost:3000${item.image}`}
+                                            image={`https://nuniali-51afdf69a4d2.herokuapp.com${item.image}`}
                                             title={item.title}
                                             slug={item.slug}
                                             date={item.date}
@@ -157,7 +167,7 @@ export default function Agendaetail({ agenda, randomPosts, randomAgendas }) {
                                     <div key={item.id}>
                                         <AgendaList
                                             id={item.id}
-                                            image={`http://localhost:3000${item.image}`}
+                                            image={`https://nuniali-51afdf69a4d2.herokuapp.com${item.image}`}
                                             title={item.title}
                                             slug={item.slug}
                                             date={item.date}
@@ -185,9 +195,9 @@ export async function getServerSideProps({ params, res }) {
     );
 
     const [responseRandomAgenda, responseRandomPost, responseSingleAgenda] = await Promise.all([
-        fetch(`http://localhost:3000/agendas`),
-        fetch(`http://localhost:3000/beritas`),
-        fetch(`http://localhost:3000/agendas/${params.id}`)
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/agendas`),
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/beritas`),
+        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/agendas/${params.id}`)
     ]);
 
 

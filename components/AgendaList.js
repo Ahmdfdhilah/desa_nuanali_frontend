@@ -32,7 +32,7 @@ export default function AgendaList({ id, image, title, slug, date }) {
                         />
                     </div>
                     <div className="col-8 px-0">
-                        <Link href={`/agenda/${slug}`}>
+                        <Link href={`/agenda/${id}`}>
                             <a className="stretched-link text-color-primary">{title}</a>
                         </Link>
                         <div className="d-flex align-items-center mt-1 text-color-muted">

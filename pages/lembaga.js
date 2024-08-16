@@ -59,9 +59,9 @@ export default function Lembaga({ lembaga }) {
                     font-size: 1.8em;
                     color: var(--text-color-primary);
                 }
-                .item-details p {
+                .item-details .description-text{
                     margin: 5px 0;
-                    color: var(--text-color-secondary);
+                    color: var(--text-color-primary);
                 }
                 .item-details .contact {
                     font-size: 0.9em;
@@ -70,6 +70,8 @@ export default function Lembaga({ lembaga }) {
                 }
                 .item-container img {
                     order: 0;
+                    background-color: var(--text-color-secondary);
+                    object-fit: fill;
                 }
                 .item-container .item-details {
                     order: 1;
@@ -111,10 +113,10 @@ export default function Lembaga({ lembaga }) {
 
                         {lembaga.map(institution => (
                             <div key={institution.id} className="item-container" data-aos="fade-up">
-                                <img src={`http://localhost:3000${institution.image}`} alt={institution.name} />
+                                <img src={`https://nuniali-51afdf69a4d2.herokuapp.com${institution.image}`} alt={institution.name} />
                                 <div className="item-details">
                                     <h3>{institution.name}</h3>
-                                    <p>{institution.description}</p>
+                                    <div className="text" dangerouslySetInnerHTML={{ __html: institution.description }}></div>
                                     <p className="contact">Kontak: {institution.contact}</p>
                                 </div>
                             </div>
@@ -135,7 +137,7 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     );
-    const response = await fetch(`http://localhost:3000/lembagas`);
+    const response = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/lembagas`);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }

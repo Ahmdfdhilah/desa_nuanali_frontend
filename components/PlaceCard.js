@@ -19,8 +19,8 @@ export default function PlaceCard({ id, title, excerpt, images }) {
             <div className="image-container">
                 <Link href={`/tempatwisata/${id}`} passHref>
                     <a>
-                        <img src={`http://localhost:3000${images[currentImage]}`} alt={title} />
-                        {console.log(`http://localhost:3000${images[currentImage]}`)}
+                        <img src={`https://nuniali-51afdf69a4d2.herokuapp.com${images[currentImage]}`} alt={title} />
+                        {console.log(`https://nuniali-51afdf69a4d2.herokuapp.com${images[currentImage]}`)}
                     </a>
                 </Link>
                 {images.length > 1 && (

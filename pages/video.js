@@ -161,15 +161,23 @@ export default function Video({ videos }) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch('http://localhost:3000/videos');
-    if (!res.ok) {
-        throw new Error('Network response was not ok');
-    }
-    const data = await res.json();
-
-    return {
-        props: {
-            videos: data,
+    try {
+        const res = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/videos');
+        if (!res.ok) {
+            throw new Error('Network response was not ok');
         }
-    };
+        const data = await res.json();
+        return {
+            props: {
+                videos: data.data,
+            }
+        };
+    } catch (error) {
+        console.error('Error fetching videos:', error);
+        return {
+            props: {
+                videos: [],
+            }
+        };
+    }
 }

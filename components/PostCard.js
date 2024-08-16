@@ -1,8 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
-import { FaUser, FaRegCalendarAlt, FaArrowRight } from "react-icons/fa";
+import { FaUser, FaRegCalendarAlt } from "react-icons/fa";
 
-export default function PostCard({ id, image, title, slug, author, date, excerpt }) {
+export default function PostCard({ id, image, title, author, date }) {
 
     return (
         <>
@@ -40,7 +40,7 @@ export default function PostCard({ id, image, title, slug, author, date, excerpt
                     alt="Post Image"
                     src={image}
                     width="350"
-                    height="200"
+                    height="300"
                     quality={90}
                     className="img-fluid rounded"
                 />
@@ -59,7 +59,6 @@ export default function PostCard({ id, image, title, slug, author, date, excerpt
                             {date}
                         </div>
                     </div>
-                    <p className="card-text text-color-secondary mt-2">{excerpt}</p>
                 </div>
             </article>
         </>

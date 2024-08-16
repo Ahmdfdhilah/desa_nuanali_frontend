@@ -32,7 +32,7 @@ export default function PostList({ id, image, title, slug, date }) {
                         />
                     </div>
                     <div className="col-8 px-0">
-                        <Link href={`/berita/${slug}`}>
+                        <Link href={`/berita/${id}`}>
                             <a className="stretched-link text-color-primary">{title}</a>
                         </Link>
                         <div className="d-flex align-items-center mt-1 text-color-muted">

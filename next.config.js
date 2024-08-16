@@ -7,5 +7,13 @@ module.exports = {
       'localhost',
       'nuniali-51afdf69a4d2.herokuapp.com'
     ],
+    async rewrites() {
+      return [
+        {
+          source: '/api/auth/:path*',
+          destination: '/api/auth/:path*', 
+        },
+      ];
+    },
   },
 }
