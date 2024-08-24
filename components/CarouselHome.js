@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import axios from "axios";
 
 export default function CarouselHome() {
+    const [banners, setBanners] = useState([]);
+
+    useEffect(() => {
+        const fetchBanners = async () => {
+            try {
+                const response = await axios.get("https://nuniali.my.id/banners");
+                setBanners(response.data);
+            } catch (error) {
+                console.error("Error fetching banners:", error);
+            }
+        };
+
+        fetchBanners();
+    }, []);
+
     return (
         <>
             <style jsx>{`
@@ -21,7 +37,7 @@ export default function CarouselHome() {
                 .carousel-item img {
                     width: 100%;
                     height: 100%;
-                    object-fit: cover; /* Maintain zoom effect */
+                    object-fit: cover;
                 }
                 .carousel-overlay {
                     position: absolute;
@@ -40,7 +56,7 @@ export default function CarouselHome() {
                     color: white;
                     text-align: center;
                     z-index: 2;
-                    padding: 0 20px; /* Ensure padding for better readability */
+                    padding: 0 20px;
                 }
                 .carousel-caption h1 {
                     font-size: 2rem;
@@ -77,56 +93,24 @@ export default function CarouselHome() {
 
             <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner">
-                    <div className="carousel-item active">
-                        <div className="carousel-image-wrapper">
-                            <Image
-                                alt="Carousel"
-                                src="/hero.webp"
-                                layout="fill"
-                                objectFit="cover"
-                                className="carousel-zoom"
-                            />
+                    {banners.map((banner, index) => (
+                        <div className={`carousel-item ${index === 0 ? "active" : ""}`} key={banner.id}>
+                            <div className="carousel-image-wrapper">
+                                <Image
+                                    alt="Carousel"
+                                    src={`https://nuniali.my.id${banner.img}`}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="carousel-zoom"
+                                />
+                            </div>
+                            <div className="carousel-overlay"></div>
+                            <div className="carousel-caption">
+                                <h1>{banner.text}</h1>
+                            </div>
                         </div>
-                        <div className="carousel-overlay"></div>
-                        <div className="carousel-caption">
-                            <h1>Selamat Datang di Web Desa Nuniali</h1>
-                            <p>Pusat Layanan Informasi Resmi Desa</p>
-                        </div>
-                    </div>
-                    <div className="carousel-item">
-                        <div className="carousel-image-wrapper">
-                            <Image
-                                alt="Carousel"
-                                src="/hero1.jpg"
-                                layout="fill"
-                                objectFit="cover"
-                                className="carousel-zoom"
-                            />
-                        </div>
-                        <div className="carousel-overlay"></div>
-                        <div className="carousel-caption">
-                            <h1>Desa Rukun & Gotong Royong</h1>
-                            <p>Website Desa Kreatif dan Inovatifff</p>
-                        </div>
-                    </div>
-                    <div className="carousel-item">
-                        <div className="carousel-image-wrapper">
-                            <Image
-                                alt="Carousel"
-                                src="/hero2.jpg"
-                                layout="fill"
-                                objectFit="cover"
-                                className="carousel-zoom"
-                            />
-                        </div>
-                        <div className="carousel-overlay"></div>
-                        <div className="carousel-caption">
-                            <h1>Desa Asri & Bahagia</h1>
-                            <p>Desa Asri, Damai dan Bahagia</p>
-                        </div>
-                    </div>
+                    ))}
                 </div>
-               
             </div>
         </>
     );

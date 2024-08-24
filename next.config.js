@@ -5,7 +5,8 @@ module.exports = {
       'images.unsplash.com',
       'cdn.pixabay.com',
       'localhost',
-      'nuniali-51afdf69a4d2.herokuapp.com'
+      'nuniali-51afdf69a4d2.herokuapp.com',
+      'nuniali.my.id'
     ],
     async rewrites() {
       return [

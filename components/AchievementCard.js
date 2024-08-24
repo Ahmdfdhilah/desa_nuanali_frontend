@@ -15,7 +15,7 @@ export default function AchievementCard({ title, description, images }) {
         <div className="achievement-card" data-aos="fade-up">
             <div className="image-container">
                 <img
-                    src={`https://nuniali-51afdf69a4d2.herokuapp.com${images[0]}`} // Only displaying one image
+                    src={`https://nuniali.my.id${images[0]}`} // Only displaying one image
                     alt={title}
                 />
             </div>

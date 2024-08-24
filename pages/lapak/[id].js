@@ -17,11 +17,11 @@ export async function getServerSideProps(context) {
     const { id } = context.params;
 
     // Fetch lapak details
-    const res = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/lapak/${id}`);
+    const res = await fetch(`https://nuniali.my.id/lapak/${id}`);
     const lapak = await res.json();
 
     // Fetch all lapak
-    const allLapakRes = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/lapak');
+    const allLapakRes = await fetch('https://nuniali.my.id/lapak');
     const allLapakData = await allLapakRes.json();
     
     // Filter out the current lapak from the list of latest lapak
@@ -156,7 +156,7 @@ export default function LapakDetail({ lapak, latestLapak }) {
                         <h1>{lapak.name}</h1>
                         <div className="image-gallery">
                             <Image
-                                src={`https://nuniali-51afdf69a4d2.herokuapp.com${lapak.image}`}
+                                src={`https://nuniali.my.id${lapak.image}`}
                                 alt={lapak.name}
                                 className="image"
                                 layout="fill"

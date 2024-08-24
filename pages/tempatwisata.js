@@ -180,7 +180,7 @@ export default function TempatWisata({ places }) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/wisata');
+    const res = await fetch('https://nuniali.my.id/wisata');
     const datas = await res.json();
     const data = datas.data;
 

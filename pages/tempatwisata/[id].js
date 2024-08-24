@@ -16,11 +16,11 @@ export async function getServerSideProps(context) {
     const { id } = context.params;
 
     // Fetch place details
-    const res = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/wisata/${id}`);
+    const res = await fetch(`https://nuniali.my.id/wisata/${id}`);
     const place = await res.json();
 
     // Fetch latest places
-    const latestRes = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/wisata');
+    const latestRes = await fetch('https://nuniali.my.id/wisata');
     const latestData = await latestRes.json();
     const latestPlaces = latestData.data.slice(-ITEMS_PER_PAGE);
 
@@ -148,7 +148,7 @@ export default function PlaceDetail({ place, latestPlaces }) {
                             {place.foto.map((img, index) => (
                                 <Image
                                     key={index}
-                                    src={`https://nuniali-51afdf69a4d2.herokuapp.com${img}`}
+                                    src={`https://nuniali.my.id${img}`}
                                     alt={place.title}
                                     className={`image ${currentImage === index ? 'active' : ''}`}
                                     layout="fill"

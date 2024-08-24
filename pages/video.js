@@ -162,7 +162,7 @@ export default function Video({ videos }) {
 
 export async function getServerSideProps() {
     try {
-        const res = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/videos');
+        const res = await fetch('https://nuniali.my.id/videos');
         if (!res.ok) {
             throw new Error('Network response was not ok');
         }

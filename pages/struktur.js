@@ -76,7 +76,7 @@ export default function Struktur({ struktur }) {
                                 <div className="card bg-card-primary shadow-sm rounded border-0 px-3 py-3">
                                     <Image
                                         alt={`Foto ${item.jabatan}`}
-                                        src={`https://nuniali-51afdf69a4d2.herokuapp.com${item.foto}`}
+                                        src={`https://nuniali.my.id${item.foto}`}
                                         width={300}
                                         height={300}
                                         quality={90}
@@ -118,7 +118,7 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     );
-    const response = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/strukturs`);
+    const response = await fetch(`https://nuniali.my.id/strukturs`);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }

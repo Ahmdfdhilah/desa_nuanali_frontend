@@ -147,11 +147,6 @@ export default function NavBarTop() {
                                         </ActiveLink>
                                     </li>
                                     <li className="me-2">
-                                        <ActiveLink activeClassName="active" href="/visimisi">
-                                            <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2 ">Visi Misi</a>
-                                        </ActiveLink>
-                                    </li>
-                                    <li className="me-2">
                                         <ActiveLink activeClassName="active" href="/bagan">
                                             <a className="nav-link nav-link-focus text-color-tertiary ms-2 ps-2 ms-md-2">Bagan Struktur</a>
                                         </ActiveLink>

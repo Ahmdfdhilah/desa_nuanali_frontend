@@ -124,11 +124,11 @@ export default function Home({ posts, agendas, videos, photos }) {
                                 <div className="text-center text-md-start mt-3 mt-md-0">
                                     <h3 className="pb-2 text-color-primary">Website Desa Nuniali</h3>
                                     <p className="text-color-secondary" id="scroll-to-statistic">
-                                    Website Resmi Desa Negeri Nuniali, Kecamatan Taniwel, Seram Bagian Barat, Maluku. Media komunikasi dan transparansi Pemerintah Desa
+                                        Website Resmi Desa Negeri Nuniali, Kecamatan Taniwel, Seram Bagian Barat, Maluku. Media komunikasi dan transparansi Pemerintah Desa
                                     </p>
                                     <Link href="/sejarah">
-                                        <a className="btn btn-primary shadow rounded px-3 scroll-to">Profil Desa 
-                                            <i className="ms-2"><FaArrowRight/></i>
+                                        <a className="btn btn-primary shadow rounded px-3 scroll-to">Profil Desa
+                                            <i className="ms-2"><FaArrowRight /></i>
                                         </a>
                                     </Link>
                                 </div>
@@ -189,7 +189,7 @@ export default function Home({ posts, agendas, videos, photos }) {
                                     <AgendaCard
                                         id={agenda.id}
                                         slug={agenda.slug}
-                                        image={`https://nuniali-51afdf69a4d2.herokuapp.com${agenda.image}`}
+                                        image={`https://nuniali.my.id${agenda.image}`}
                                         title={agenda.title}
                                         location={agenda.location}
                                         date={agenda.date}
@@ -250,10 +250,10 @@ export default function Home({ posts, agendas, videos, photos }) {
                                     <PostCard
                                         id={post.id}
                                         slug={post.slug}
-                                        image={`https://nuniali-51afdf69a4d2.herokuapp.com${post.image}`}
+                                        image={`https://nuniali.my.id${post.image}`}
                                         title={post.title}
                                         date={post.createdAt}
-                                         />
+                                    />
                                 </SwiperSlide>
                             )}
                         </Swiper>
@@ -272,7 +272,7 @@ export default function Home({ posts, agendas, videos, photos }) {
                     <div className="row g-4">
                         {featuredVideo.map(video =>
                             <div key={video.id} className="col-lg-4 col-md-6 col-12">
-                                 {console.log(video)}
+                                {console.log(video)}
                                 <VideoCard
                                     src={video.link}
                                 />
@@ -309,34 +309,39 @@ export default function Home({ posts, agendas, videos, photos }) {
         </>
     );
 }
-
 export async function getServerSideProps() {
-    const [postsRes, agendasRes, videosRes, photosRes] = await Promise.all([
-        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/beritas`),
-        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/agendas`),
-        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/videos`),
-        fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/photos`)
-    ]);
+    // Fetch posts
+    const postsRes = await fetch('https://nuniali.my.id/beritas');
+    const posts = await postsRes.json();
 
-    const [posts, agendas, videos, photos] = await Promise.all([
-        postsRes.json(),
-        agendasRes.json(),
-        videosRes.json(),
-        photosRes.json()
-    ]);
+    // Fetch agendas
+    const agendasRes = await fetch('https://nuniali.my.id/agendas');
+    const agendas = await agendasRes.json();
 
+    // Fetch videos
+    const videosRes = await fetch('https://nuniali.my.id/videos');
+    const videos = await videosRes.json();
+
+    // Fetch photos
+    const photosRes = await fetch('https://nuniali.my.id/photos');
+    const photos = await photosRes.json();
+    console.log(photos.data);
+    
+
+    // Process photos data
     const photosData = photos.data.map(photo => ({
-        src: `https://nuniali-51afdf69a4d2.herokuapp.com${photo.src}`,
+        src: `https://nuniali.my.id${photo.src}`,
         width: 4, // Adjust width as needed
         height: 3, // Adjust height as needed
     }));
 
     return {
         props: {
-            posts:posts.data,
-            agendas:agendas.data,
-            videos:videos.data,
-            photos:photosData
+            posts: posts.data,
+            agendas: agendas.data,
+            videos: videos.data,
+            photos: photosData
         }
     };
 }
+

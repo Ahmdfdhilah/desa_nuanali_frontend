@@ -11,7 +11,7 @@ const title = "Lapak Desa";
 
 export async function getServerSideProps() {
     try {
-        const response = await axios.get('https://nuniali-51afdf69a4d2.herokuapp.com/lapak');
+        const response = await axios.get('https://nuniali.my.id/lapak');
         const products = response.data.data;
     
         return {
