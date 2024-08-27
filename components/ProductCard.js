@@ -106,7 +106,7 @@ export default function ProductCard({ id, slug, name, price, image, phone, descr
 
             <div className="card bg-card-primary shadow-custom rounded-3">
                 <div className="card-img">
-                    <Image alt={name} src={`https://nuniali.my.id${image}`} width={350} height={200} quality={90} className="img-fluid rounded-top" />
+                    <Image alt={name} src={`https://nuniali-51afdf69a4d2.herokuapp.com${image}`} width={350} height={200} quality={90} className="img-fluid rounded-top" />
                 </div>
                 <div className="card-body">
                     <h6 className="card-title">{name}</h6>

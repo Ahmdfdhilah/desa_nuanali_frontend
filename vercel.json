@@ -1,0 +1,8 @@
+{
+    "functions": {
+      "pages/**/*": {
+        "maxDuration": 60
+      }
+    }
+  }
+  

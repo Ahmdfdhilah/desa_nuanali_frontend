@@ -11,11 +11,11 @@ const title = "Foto";
 const ITEMS_PER_PAGE = 6; // Define how many items you want per page
 
 export async function getServerSideProps() {
-    const res = await fetch("https://nuniali.my.id/photos");
+    const res = await fetch("https://nuniali-51afdf69a4d2.herokuapp.com/photos");
     const data = await res.json();
 
     const photos = data.data.map(photo => ({
-        src: `https://nuniali.my.id${photo.src}`,
+        src: `https://nuniali-51afdf69a4d2.herokuapp.com${photo.src}`,
         width: 4, // Adjust width as needed
         height: 3, // Adjust height as needed
     }));

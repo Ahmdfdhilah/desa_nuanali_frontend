@@ -35,10 +35,10 @@ export default function BaganPemerintahan() {
     useEffect(() => {
         const fetchDiagramImage = async () => {
             try {
-                const response = await axios.get('https://nuniali.my.id/bagan'); // Update the URL as needed
+                const response = await axios.get('https://nuniali-51afdf69a4d2.herokuapp.com/bagan'); // Update the URL as needed
                 if (response.data && response.data.img) {
                     setDiagramImage({
-                        src: `https://nuniali.my.id${response.data.img}`, // Update this path as needed
+                        src: `https://nuniali-51afdf69a4d2.herokuapp.com${response.data.img}`, // Update this path as needed
                         width: 1200,
                         height: 800,
                         title: 'Bagan Struktur Pemerintahan',

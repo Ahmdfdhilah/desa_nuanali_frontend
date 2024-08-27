@@ -127,7 +127,7 @@ export default function Agenda({ agendas }) {
                                             key={agenda.id}
                                             id={agenda.id}
                                             slug={agenda.slug}
-                                            image={`https://nuniali.my.id${agenda.image}`}
+                                            image={`https://nuniali-51afdf69a4d2.herokuapp.com${agenda.image}`}
                                             title={agenda.title}
                                             location={agenda.location}
                                             date={agenda.date}
@@ -171,7 +171,7 @@ export default function Agenda({ agendas }) {
 
 // Fetch all data from the API endpoint and pass it as props
 export async function getServerSideProps() {
-    const res = await fetch('https://nuniali.my.id/agendas');
+    const res = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/agendas');
     if (!res.ok) {
         throw new Error('Network response was not ok');
     }

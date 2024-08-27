@@ -113,7 +113,7 @@ export default function Lembaga({ lembaga }) {
 
                         {lembaga.map(institution => (
                             <div key={institution.id} className="item-container" data-aos="fade-up">
-                                <img src={`https://nuniali.my.id${institution.image}`} alt={institution.name} />
+                                <img src={`https://nuniali-51afdf69a4d2.herokuapp.com${institution.image}`} alt={institution.name} />
                                 <div className="item-details">
                                     <h3>{institution.name}</h3>
                                     <div className="text" dangerouslySetInnerHTML={{ __html: institution.description }}></div>
@@ -137,7 +137,7 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     );
-    const response = await fetch(`https://nuniali.my.id/lembagas`);
+    const response = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/lembagas`);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
