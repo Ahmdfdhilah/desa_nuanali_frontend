@@ -189,7 +189,7 @@ export default function Home({ posts, agendas, videos, photos }) {
                                     <AgendaCard
                                         id={agenda.id}
                                         slug={agenda.slug}
-                                        image={`https://nuniali-51afdf69a4d2.herokuapp.com${agenda.image}`}
+                                        image={`https://nuniali.my.id${agenda.image}`}
                                         title={agenda.title}
                                         location={agenda.location}
                                         date={agenda.date}
@@ -250,7 +250,7 @@ export default function Home({ posts, agendas, videos, photos }) {
                                     <PostCard
                                         id={post.id}
                                         slug={post.slug}
-                                        image={`https://nuniali-51afdf69a4d2.herokuapp.com${post.image}`}
+                                        image={`https://nuniali.my.id${post.image}`}
                                         title={post.title}
                                         date={post.createdAt}
                                     />
@@ -311,26 +311,26 @@ export default function Home({ posts, agendas, videos, photos }) {
 }
 export async function getServerSideProps() {
     // Fetch posts
-    const postsRes = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/beritas');
+    const postsRes = await fetch('https://nuniali.my.id/beritas');
     const posts = await postsRes.json();
 
     // Fetch agendas
-    const agendasRes = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/agendas');
+    const agendasRes = await fetch('https://nuniali.my.id/agendas');
     const agendas = await agendasRes.json();
 
     // Fetch videos
-    const videosRes = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/videos');
+    const videosRes = await fetch('https://nuniali.my.id/videos');
     const videos = await videosRes.json();
 
     // Fetch photos
-    const photosRes = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/photos');
+    const photosRes = await fetch('https://nuniali.my.id/photos');
     const photos = await photosRes.json();
     console.log(photos.data);
     
 
     // Process photos data
     const photosData = photos.data.map(photo => ({
-        src: `https://nuniali-51afdf69a4d2.herokuapp.com${photo.src}`,
+        src: `https://nuniali.my.id${photo.src}`,
         width: 4, // Adjust width as needed
         height: 3, // Adjust height as needed
     }));

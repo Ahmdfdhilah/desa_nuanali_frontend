@@ -423,19 +423,19 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     )
-    const getDataGender = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/genders`);
+    const getDataGender = await fetch(`https://nuniali.my.id/genders`);
     const gender = await getDataGender.json();
-    const getDataEducation = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/educations`);
+    const getDataEducation = await fetch(`https://nuniali.my.id/educations`);
     const education = await getDataEducation.json();
-    const getDataReligion = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/religions');
+    const getDataReligion = await fetch('https://nuniali.my.id/religions');
     const religion = await getDataReligion.json();
-    const getDataSekolah = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/sekolah`);
+    const getDataSekolah = await fetch(`https://nuniali.my.id/sekolah`);
     const sekolah = await getDataSekolah.json();
-    const getDataPekerjaan = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/pekerjaans`);
+    const getDataPekerjaan = await fetch(`https://nuniali.my.id/pekerjaans`);
     const pekerjaan = await getDataPekerjaan.json();
-    const getDataStatus = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/statuses`);
+    const getDataStatus = await fetch(`https://nuniali.my.id/statuses`);
     const status = await getDataStatus.json();
-    const getDataUsia = await fetch(`https://nuniali-51afdf69a4d2.herokuapp.com/usias`);
+    const getDataUsia = await fetch(`https://nuniali.my.id/usias`);
     const usia = await getDataUsia.json();
     const props = { gender, education, religion, sekolah, pekerjaan, status, usia }
     console.log(props);

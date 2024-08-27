@@ -10,7 +10,7 @@ const title = "Prestasi";
 const ITEMS_PER_PAGE = 5;
 
 export async function getServerSideProps() {
-    const res = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/prestasi');
+    const res = await fetch('https://nuniali.my.id/prestasi');
     const data = await res.json();
 
     return {

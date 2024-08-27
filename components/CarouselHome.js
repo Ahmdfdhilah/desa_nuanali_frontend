@@ -8,7 +8,7 @@ export default function CarouselHome() {
     useEffect(() => {
         const fetchBanners = async () => {
             try {
-                const response = await axios.get("https://nuniali-51afdf69a4d2.herokuapp.com/banners");
+                const response = await axios.get("https://nuniali.my.id/banners");
                 setBanners(response.data);
             } catch (error) {
                 console.error("Error fetching banners:", error);
@@ -98,7 +98,7 @@ export default function CarouselHome() {
                             <div className="carousel-image-wrapper">
                                 <Image
                                     alt="Carousel"
-                                    src={`https://nuniali-51afdf69a4d2.herokuapp.com${banner.img}`}
+                                    src={`https://nuniali.my.id${banner.img}`}
                                     layout="fill"
                                     objectFit="cover"
                                     className="carousel-zoom"

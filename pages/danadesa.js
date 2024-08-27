@@ -207,7 +207,7 @@ export async function getServerSideProps({ res }) {
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'
     )
-    const getDataDanaDesa = await fetch('https://nuniali-51afdf69a4d2.herokuapp.com/dana-desas');
+    const getDataDanaDesa = await fetch('https://nuniali.my.id/dana-desas');
     const json = await getDataDanaDesa.json();
     const danadesa = json.data;
 
